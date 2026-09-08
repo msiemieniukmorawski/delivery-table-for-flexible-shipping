@@ -181,6 +181,7 @@ $dtfs_attributes_table = static function (array $attributes): void {
 
 	<h3><?php esc_html_e('Template function', 'delivery-table-for-flexible-shipping'); ?></h3>
 
+	<?php // phpcs:disable Squiz.PHP.EmbeddedPhp -- <pre> has to hug its content, or the rendered code block gains a blank first line. ?>
 	<pre class="dtfs-doc-code"><?php
 	echo esc_html(
 		'// Anywhere in a theme template.' . "\n"
@@ -191,6 +192,7 @@ $dtfs_attributes_table = static function (array $attributes): void {
 		. '$zones = dtfs()->zones()->all();'
 	);
 	?></pre>
+	<?php // phpcs:enable Squiz.PHP.EmbeddedPhp ?>
 
 	<h3><?php esc_html_e('Overriding the markup', 'delivery-table-for-flexible-shipping'); ?></h3>
 
