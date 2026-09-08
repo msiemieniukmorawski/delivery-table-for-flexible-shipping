@@ -67,8 +67,8 @@ msgid "Example"
 msgstr "Przykład"
 
 #: includes/Admin/views/documentation.php:49
-msgid "This plugin reads your Flexible Shipping zones and cost rules and turns them into a delivery price table. There is nothing to configure here — change a rule in Flexible Shipping and the table follows."
-msgstr "Wtyczka czyta strefy i reguły kosztów Flexible Shipping i zamienia je w tabelę kosztów dostawy. Nie ma tu nic do konfigurowania — zmień regułę w Flexible Shipping, a tabela się zaktualizuje."
+msgid "This plugin reads your Flexible Shipping zones and cost rules and turns them into a delivery price table. There is nothing to configure here: change a rule in Flexible Shipping and the table follows."
+msgstr "Wtyczka czyta strefy i reguły kosztów Flexible Shipping i zamienia je w tabelę kosztów dostawy. Nie ma tu nic do konfigurowania: zmień regułę w Flexible Shipping, a tabela się zaktualizuje."
 
 #: includes/Admin/views/documentation.php:56
 msgid "How to place the table"
@@ -117,16 +117,16 @@ msgid "Zone headings"
 msgstr "Nagłówki stref"
 
 #: includes/Admin/views/documentation.php:115
-msgid "Headings show the zone regions translated into the storefront language — \"Germany\" in an English shop, \"Deutschland\" in a German one — rather than the zone name you typed in wp-admin. Postcodes limit a zone rather than name it, so they are left out."
-msgstr "Nagłówki pokazują regiony strefy przetłumaczone na język sklepu — „Niemcy” w sklepie polskim, „Deutschland” w niemieckim — a nie nazwę strefy wpisaną w panelu. Kody pocztowe ograniczają strefę, a nie ją nazywają, więc są pomijane."
+msgid "Headings show the zone regions translated into the storefront language, so an English shop reads \"Germany\" where a German one reads \"Deutschland\". That is the region, not the zone name you typed in wp-admin. Postcodes limit a zone rather than name it, so they are left out."
+msgstr "Nagłówki pokazują regiony strefy przetłumaczone na język sklepu, więc sklep polski czyta „Niemcy”, a niemiecki „Deutschland”. To region, a nie nazwa strefy wpisana w panelu. Kody pocztowe ograniczają strefę, a nie ją nazywają, więc są pomijane."
 
 #: includes/Admin/views/documentation.php:123
 msgid "A dash instead of a price"
 msgstr "Myślnik zamiast ceny"
 
 #: includes/Admin/views/documentation.php:126
-msgid "No cost rule in that method covers that order value — for example when the method is priced by weight rather than by order value. The table says so instead of guessing."
-msgstr "Żadna reguła kosztu w tej metodzie nie obejmuje tej wartości zamówienia — na przykład gdy metoda jest wyceniana po wadze, a nie po wartości. Tabela mówi to wprost, zamiast zgadywać."
+msgid "No cost rule in that method covers that order value, for example when the method is priced by weight rather than by order value. The table says so instead of guessing."
+msgstr "Żadna reguła kosztu w tej metodzie nie obejmuje tej wartości zamówienia, na przykład gdy metoda jest wyceniana po wadze, a nie po wartości. Tabela mówi to wprost, zamiast zgadywać."
 
 #: includes/Admin/views/documentation.php:134
 msgid "An asterisk after a price"

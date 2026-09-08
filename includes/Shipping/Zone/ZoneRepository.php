@@ -124,7 +124,7 @@ final class ZoneRepository
     }
 
     /**
-     * Zone matching the shop's own address — the sanest guess when there is no
+     * Zone matching the shop's own address, the sanest guess when there is no
      * cart yet, e.g. on a product page or a static delivery information page.
      */
     public function forBaseCountry(): ?WC_Shipping_Zone

@@ -2,10 +2,10 @@
 
 Turns your [Flexible Shipping](https://wordpress.org/plugins/flexible-shipping/) zones and cost rules
 into a delivery price table on the storefront. Order value ranges are the columns, your shipping
-methods are the rows, and nothing is configured twice — change a rule in Flexible Shipping and the
+methods are the rows, and nothing is configured twice: change a rule in Flexible Shipping and the
 table follows.
 
-- **Author:** Marcin Siemieniuk-Morawski — <https://ms-m.pl/>
+- **Author:** Marcin Siemieniuk-Morawski, <https://ms-m.pl/>
 - **Requires:** WordPress 6.2, PHP 8.1, WooCommerce 7.0, Flexible Shipping by WP Desk
 - **License:** GPL-2.0-or-later
 
@@ -35,7 +35,7 @@ Reading the table, and the developer surface:
 2. Upload this plugin and activate it.
 3. Drop `[dtfs_shipping_table]` on a page, or add the **Delivery Table** block.
 
-**WooCommerce → Delivery Table** holds the full reference. There is nothing to configure there — the
+**WooCommerce → Delivery Table** holds the full reference. There is nothing to configure there: the
 plugin has no settings of its own on purpose.
 
 ---
@@ -73,11 +73,11 @@ with the zone, the heading mode and the cash-on-delivery split in the inspector.
 shown, so rows stay aligned when two carriers change price at different amounts. Boundaries follow
 the shop's currency precision, so a zero-decimal currency such as HUF reads correctly.
 
-**Zone headings** show the zone's *regions* translated into the storefront language — "Germany" in an
-English shop, "Deutschland" in a German one — rather than the zone name typed into wp-admin.
-Postcodes limit a zone rather than name it, so they are left out.
+**Zone headings** show the zone's *regions* translated into the storefront language, so an English
+shop reads "Germany" where a German one reads "Deutschland". That is the region, not the zone name
+typed into wp-admin. Postcodes limit a zone rather than name it, so they are left out.
 
-**Zones are grouped by region.** Shops often split one country across several zones — a courier zone
+**Zones are grouped by region.** Shops often split one country across several zones: a courier zone,
 and a narrower one for certain postcodes. "What does delivery to Germany cost?" is one question, so
 those zones are gathered under one heading, in the order you arranged them, however far apart they
 sit in wp-admin. A zone covering several countries at once keeps its own combined heading. Every
