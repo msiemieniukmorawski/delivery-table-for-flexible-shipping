@@ -30,6 +30,7 @@ final class ThresholdDetector
     private const UNREACHABLE_THRESHOLD = 999999.0;
 
     private const REQUIRES_ORDER_AMOUNT = 'order_amount';
+    private const REQUIRES_MIN_AMOUNT   = 'min_amount';
     private const REQUIRES_EITHER       = 'either';
     private const REQUIRES_BOTH         = 'both';
 
@@ -37,12 +38,25 @@ final class ThresholdDetector
      * Settings that carry a minimum order amount. "coupon" is deliberately
      * absent: it has no amount, so there is nothing to put in the table.
      *
+     * Flexible Shipping calls the amount-only case `order_amount`; WooCommerce's
+     * own free shipping method calls it `min_amount`. They mean the same thing.
+     *
      * @var array<string, bool> Setting value => whether a coupon is also required.
      */
     private const AMOUNT_BEARING_REQUIREMENTS = [
         self::REQUIRES_ORDER_AMOUNT => false,
+        self::REQUIRES_MIN_AMOUNT   => false,
         self::REQUIRES_EITHER       => false,
         self::REQUIRES_BOTH         => true,
+    ];
+
+    /**
+     * Where a threshold lives, as "which setting names the requirement" =>
+     * "which setting holds the amount".
+     */
+    private const THRESHOLD_SETTINGS = [
+        'method_free_shipping_requires' => 'method_free_shipping',
+        'requires'                      => 'min_amount',
     ];
 
     public function __construct(
@@ -60,15 +74,24 @@ final class ThresholdDetector
     private function fromFreeShippingSetting(WC_Shipping_Method $method): ?FreeShippingThreshold
     {
         $settings = $this->methods->settings($method);
-        $requires = (string) ($settings['method_free_shipping_requires'] ?? '');
 
-        if (!array_key_exists($requires, self::AMOUNT_BEARING_REQUIREMENTS)) {
-            return null;
+        foreach (self::THRESHOLD_SETTINGS as $requiresKey => $amountKey) {
+            $threshold = $this->threshold(
+                (string) ($settings[$requiresKey] ?? ''),
+                $settings[$amountKey] ?? null
+            );
+
+            if ($threshold !== null) {
+                return $threshold;
+            }
         }
 
-        $amount = $settings['method_free_shipping'] ?? null;
+        return null;
+    }
 
-        if (!is_numeric($amount)) {
+    private function threshold(string $requires, mixed $amount): ?FreeShippingThreshold
+    {
+        if (!array_key_exists($requires, self::AMOUNT_BEARING_REQUIREMENTS) || !is_numeric($amount)) {
             return null;
         }
 
