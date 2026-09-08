@@ -269,8 +269,8 @@ msgid "Never"
 msgstr "Nie"
 
 #: src/shipping-table/edit.js:80
-msgid "Follow the WooCommerce setting"
-msgstr "Der WooCommerce-Einstellung folgen"
+msgid "Follow the shop setting"
+msgstr "Der Shop-Einstellung folgen"
 
 #: src/shipping-table/edit.js:87
 msgid "Always including tax"
@@ -334,3 +334,7 @@ msgstr "flexible shipping"
 msgctxt "block keyword"
 msgid "table"
 msgstr "tabelle"
+
+#: src/shipping-table/edit.js:100
+msgid "The shop setting is \"Display prices during cart and checkout\" in WooCommerce."
+msgstr "Die Shop-Einstellung ist „Preise im Warenkorb und an der Kasse anzeigen“ in WooCommerce."

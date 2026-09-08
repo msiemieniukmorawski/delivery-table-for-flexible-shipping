@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-08T13:35:09+00:00\n"
+"POT-Creation-Date: 2026-09-08T18:19:53+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: delivery-table-for-flexible-shipping\n"
@@ -189,15 +189,15 @@ msgstr ""
 msgid "No shipping methods to display."
 msgstr ""
 
-#: includes/Table/DeliveryTableRenderer.php:128
+#: includes/Table/DeliveryTableRenderer.php:137
 msgid "Delivery"
 msgstr ""
 
-#: includes/Table/DeliveryTableRenderer.php:129
+#: includes/Table/DeliveryTableRenderer.php:138
 msgid "Prepaid"
 msgstr ""
 
-#: includes/Table/DeliveryTableRenderer.php:130
+#: includes/Table/DeliveryTableRenderer.php:139
 msgid "Cash on delivery"
 msgstr ""
 
@@ -223,19 +223,19 @@ msgstr ""
 msgid "%s and up"
 msgstr ""
 
-#: includes/Table/TableFactory.php:96
+#: includes/Table/TableFactory.php:108
 msgid "Free shipping"
 msgstr ""
 
-#: includes/Table/TableFactory.php:104
+#: includes/Table/TableFactory.php:116
 msgid "Reaching this order value is not enough on its own: this method also needs a free shipping coupon."
 msgstr ""
 
-#: includes/Table/TableFactory.php:116
+#: includes/Table/TableFactory.php:128
 msgid "Not available for this order value"
 msgstr ""
 
-#: includes/Table/TableFactory.php:128
+#: includes/Table/TableFactory.php:142
 msgid "This price also depends on a condition the table cannot show, such as weight or item count."
 msgstr ""
 
@@ -276,7 +276,7 @@ msgid "Never"
 msgstr ""
 
 #: src/shipping-table/edit.js:80
-msgid "Follow the WooCommerce setting"
+msgid "Follow the shop setting"
 msgstr ""
 
 #: src/shipping-table/edit.js:87
@@ -287,23 +287,27 @@ msgstr ""
 msgid "Always excluding tax"
 msgstr ""
 
-#: src/shipping-table/edit.js:107
+#: src/shipping-table/edit.js:100
+msgid "The shop setting is \"Display prices during cart and checkout\" in WooCommerce."
+msgstr ""
+
+#: src/shipping-table/edit.js:111
 msgid "Cash on delivery match"
 msgstr ""
 
-#: src/shipping-table/edit.js:112
+#: src/shipping-table/edit.js:116
 msgid "Methods whose title contains this text get their own table. Leave empty for a single table."
 msgstr ""
 
-#: src/shipping-table/edit.js:120
+#: src/shipping-table/edit.js:124
 msgid "Include disabled methods"
 msgstr ""
 
-#: src/shipping-table/edit.js:129
+#: src/shipping-table/edit.js:133
 msgid "Include \"Locations not covered by your other zones\""
 msgstr ""
 
-#: src/shipping-table/edit.js:148
+#: src/shipping-table/edit.js:152
 msgid "Nothing to show yet. Check that the selected zone has Flexible Shipping methods with cost rules."
 msgstr ""
 
