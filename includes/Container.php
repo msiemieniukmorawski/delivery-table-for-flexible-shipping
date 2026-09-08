@@ -15,6 +15,7 @@ use MSM\DeliveryTable\Shipping\Price\PriceFormatter;
 use MSM\DeliveryTable\Shipping\Rule\CoreMethodRules;
 use MSM\DeliveryTable\Shipping\Rule\RuleParser;
 use MSM\DeliveryTable\Shipping\Tax\ShippingTaxCalculator;
+use MSM\DeliveryTable\Shipping\Zone\ZoneGrouper;
 use MSM\DeliveryTable\Shipping\Zone\ZoneLabeller;
 use MSM\DeliveryTable\Shipping\Zone\ZoneRepository;
 use MSM\DeliveryTable\Shortcodes\DeliveryTableShortcode;
@@ -106,6 +107,14 @@ final class Container
         return $this->share(ZoneLabeller::class, static fn (): ZoneLabeller => new ZoneLabeller());
     }
 
+    public function zoneGrouper(): ZoneGrouper
+    {
+        return $this->share(
+            ZoneGrouper::class,
+            fn (): ZoneGrouper => new ZoneGrouper($this->zoneLabeller())
+        );
+    }
+
     public function methods(): MethodRepository
     {
         return $this->share(MethodRepository::class, static fn (): MethodRepository => new MethodRepository());
@@ -165,7 +174,7 @@ final class Container
             DeliveryTableRenderer::class,
             fn (): DeliveryTableRenderer => new DeliveryTableRenderer(
                 $this->zones(),
-                $this->zoneLabeller(),
+                $this->zoneGrouper(),
                 $this->methods(),
                 $this->tableFactory(),
                 $this->template(),
