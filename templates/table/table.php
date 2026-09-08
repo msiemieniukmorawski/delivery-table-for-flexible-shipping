@@ -43,4 +43,15 @@ defined('ABSPATH') || exit;
             </tbody>
         </table>
     </div>
+
+    <?php if ($table->hasApproximateCosts()) : ?>
+        <p class="dtfs-table__footnote">
+            <?php
+            esc_html_e(
+                '* This price also depends on something this table cannot show, such as weight, item count or a coupon. The final cost is calculated at checkout.',
+                'delivery-table-for-flexible-shipping'
+            );
+            ?>
+        </p>
+    <?php endif; ?>
 </div>

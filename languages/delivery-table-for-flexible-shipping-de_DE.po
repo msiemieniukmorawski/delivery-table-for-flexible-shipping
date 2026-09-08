@@ -203,17 +203,29 @@ msgstr "%1$s – %2$s"
 msgid "%s and up"
 msgstr "Ab %s"
 
-#: includes/Table/TableFactory.php:84
+#: includes/Table/TableFactory.php:89
 msgid "Free shipping"
 msgstr "Kostenloser Versand"
 
-#: includes/Table/TableFactory.php:95
+#: includes/Table/TableFactory.php:97
+msgid "Reaching this order value is not enough on its own: this method also needs a free shipping coupon."
+msgstr "Dieser Bestellwert allein genügt nicht: Diese Versandart braucht zusätzlich einen Gutschein für kostenlosen Versand."
+
+#: includes/Table/TableFactory.php:109
 msgid "Not available for this order value"
 msgstr "Für diesen Bestellwert nicht verfügbar"
+
+#: includes/Table/TableFactory.php:121
+msgid "This price also depends on a condition the table cannot show, such as weight or item count."
+msgstr "Dieser Preis hängt zusätzlich von einer Bedingung ab, die die Tabelle nicht zeigt — etwa Gewicht oder Artikelanzahl."
 
 #: templates/table/table.php:21
 msgid "Delivery method"
 msgstr "Versandart"
+
+#: templates/table/table.php:50
+msgid "* This price also depends on something this table cannot show, such as weight, item count or a coupon. The final cost is calculated at checkout."
+msgstr "* Dieser Preis hängt zusätzlich von etwas ab, das diese Tabelle nicht zeigt — Gewicht, Artikelanzahl oder einem Gutschein. Der endgültige Betrag wird an der Kasse berechnet."
 
 #: src/shipping-table/edit.js:22
 msgid "All zones"
