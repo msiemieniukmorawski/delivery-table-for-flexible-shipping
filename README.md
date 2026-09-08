@@ -32,6 +32,7 @@ plugin has no settings of its own on purpose.
 | --- | --- | --- |
 | `zone` | Shipping zone name or id. Empty renders one table per zone. | all zones |
 | `zone_headings` | `auto` (only with several zones), `show`, `hide`. | `auto` |
+| `tax` | `auto` (follow the WooCommerce cart setting), `incl`, `excl`. | `auto` |
 | `cod_prefix` | Split into prepaid / cash-on-delivery tables by matching this text in the method title. | *(one table)* |
 | `show_disabled` | Include disabled shipping methods. | `0` |
 | `include_rest_of_world` | Also render the implicit "Locations not covered by your other zones" zone. | `no` |
@@ -62,7 +63,13 @@ Postcodes limit a zone rather than name it, so they are left out.
 priced by weight or item count. The table says so rather than guessing, and in particular never
 prints "Free shipping" for a range it cannot price.
 
-**Prices** are gross, including shipping VAT.
+**An asterisk** means the amount is right for that order value, but the same Flexible Shipping rule
+also depends on something the table cannot show - a weight or item-count condition, or a free
+shipping coupon the customer must still hold. Hovering it explains which.
+
+**Prices** follow the WooCommerce "Display prices during cart and checkout" setting by default, so a
+gross-priced shop gets gross prices and a net-priced shop gets net ones. Override it per table with
+`tax="incl"` or `tax="excl"`.
 
 ---
 

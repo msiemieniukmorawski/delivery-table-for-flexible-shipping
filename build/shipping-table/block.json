@@ -31,6 +31,10 @@
       "type": "string",
       "default": "auto"
     },
+    "taxDisplay": {
+      "type": "string",
+      "default": "auto"
+    },
     "includeRestOfWorld": {
       "type": "boolean",
       "default": false

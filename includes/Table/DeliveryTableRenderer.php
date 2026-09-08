@@ -133,7 +133,7 @@ final class DeliveryTableRenderer
         $tables = [];
 
         foreach ($groups as $key => $groupMethods) {
-            $table = $this->tables->create($headings[$key], $groupMethods);
+            $table = $this->tables->create($headings[$key], $groupMethods, $request->taxDisplay);
 
             if ($table !== null && !$table->isEmpty()) {
                 $tables[] = $table;

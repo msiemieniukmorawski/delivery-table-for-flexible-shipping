@@ -1,42 +1,55 @@
 {
-	"$schema": "https://schemas.wp.org/trunk/block.json",
-	"apiVersion": 3,
-	"name": "dtfs/shipping-table",
-	"title": "Delivery Table",
-	"category": "widgets",
-	"icon": "editor-table",
-	"description": "Delivery prices per order value, built from your Flexible Shipping zones and rules.",
-	"keywords": [ "shipping", "delivery", "woocommerce", "flexible shipping", "table" ],
-	"textdomain": "delivery-table-for-flexible-shipping",
-	"attributes": {
-		"zone": {
-			"type": "string",
-			"default": ""
-		},
-		"showDisabled": {
-			"type": "boolean",
-			"default": false
-		},
-		"codPrefix": {
-			"type": "string",
-			"default": ""
-		},
-		"zoneHeadings": {
-			"type": "string",
-			"default": "auto"
-		},
-		"includeRestOfWorld": {
-			"type": "boolean",
-			"default": false
-		}
-	},
-	"supports": {
-		"html": false,
-		"align": [ "wide", "full" ],
-		"spacing": {
-			"margin": true,
-			"padding": true
-		}
-	},
-	"editorScript": "file:./index.js"
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "dtfs/shipping-table",
+    "title": "Delivery Table",
+    "category": "widgets",
+    "icon": "editor-table",
+    "description": "Delivery prices per order value, built from your Flexible Shipping zones and rules.",
+    "keywords": [
+        "shipping",
+        "delivery",
+        "woocommerce",
+        "flexible shipping",
+        "table"
+    ],
+    "textdomain": "delivery-table-for-flexible-shipping",
+    "attributes": {
+        "zone": {
+            "type": "string",
+            "default": ""
+        },
+        "showDisabled": {
+            "type": "boolean",
+            "default": false
+        },
+        "codPrefix": {
+            "type": "string",
+            "default": ""
+        },
+        "zoneHeadings": {
+            "type": "string",
+            "default": "auto"
+        },
+        "taxDisplay": {
+            "type": "string",
+            "default": "auto"
+        },
+        "includeRestOfWorld": {
+            "type": "boolean",
+            "default": false
+        }
+    },
+    "supports": {
+        "html": false,
+        "align": [
+            "wide",
+            "full"
+        ],
+        "spacing": {
+            "margin": true,
+            "padding": true
+        }
+    },
+    "editorScript": "file:./index.js"
 }

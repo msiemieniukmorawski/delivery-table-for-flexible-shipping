@@ -10,6 +10,7 @@ use MSM\DeliveryTable\Shipping\Price\PriceFormatter;
 use MSM\DeliveryTable\Shipping\Rule\RuleParser;
 use MSM\DeliveryTable\Shipping\Rule\RuleSet;
 use MSM\DeliveryTable\Shipping\Tax\ShippingTaxCalculator;
+use MSM\DeliveryTable\Shipping\Tax\TaxDisplay;
 use WC_Shipping_Method;
 
 if (!defined('ABSPATH')) {
@@ -37,7 +38,7 @@ final class TableFactory
     /**
      * @param list<WC_Shipping_Method> $methods
      */
-    public function create(string $heading, array $methods): ?DeliveryTable
+    public function create(string $heading, array $methods, TaxDisplay $taxDisplay): ?DeliveryTable
     {
         if ($methods === []) {
             return null;
@@ -73,7 +74,8 @@ final class TableFactory
                     fn (ValueInterval $column): TableCell => $this->cell(
                         $entry['rules'],
                         $entry['threshold'],
-                        $column
+                        $column,
+                        $taxDisplay
                     ),
                     $columns
                 )
@@ -84,7 +86,12 @@ final class TableFactory
         return new DeliveryTable($heading, $columns, $rows);
     }
 
-    private function cell(RuleSet $rules, ?FreeShippingThreshold $threshold, ValueInterval $column): TableCell
+    private function cell(
+        RuleSet $rules,
+        ?FreeShippingThreshold $threshold,
+        ValueInterval $column,
+        TaxDisplay $taxDisplay
+    ): TableCell
     {
         $freeLabel = __('Free shipping', 'delivery-table-for-flexible-shipping');
 
@@ -110,7 +117,7 @@ final class TableFactory
             );
         }
 
-        $cost = $this->prices->round($this->tax->grossCost($rule->cost));
+        $cost = $this->prices->round($taxDisplay->apply($rule->cost, $this->tax));
 
         $cell = $cost <= 0.0
             ? TableCell::free($freeLabel)

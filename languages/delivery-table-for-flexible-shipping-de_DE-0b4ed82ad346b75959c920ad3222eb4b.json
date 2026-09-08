@@ -13,6 +13,9 @@
             "Zone headings": [
                 "Zonen\u00fcberschriften"
             ],
+            "Tax": [
+                "Steuer"
+            ],
             "All zones": [
                 "Alle Zonen"
             ],
@@ -33,6 +36,15 @@
             ],
             "Never": [
                 "Nie"
+            ],
+            "Follow the WooCommerce setting": [
+                "Der WooCommerce-Einstellung folgen"
+            ],
+            "Always including tax": [
+                "Immer inklusive Steuer"
+            ],
+            "Always excluding tax": [
+                "Immer ohne Steuer"
             ],
             "Cash on delivery match": [
                 "Nachnahme-Erkennung"

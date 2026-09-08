@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-08T13:31:35+00:00\n"
+"POT-Creation-Date: 2026-09-08T13:35:09+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: delivery-table-for-flexible-shipping\n"
@@ -94,69 +94,82 @@ msgid "Zone headings: auto (only when several zones are shown), show, or hide."
 msgstr ""
 
 #: includes/Admin/views/documentation.php:89
-msgid "Split the output into a prepaid table and a cash-on-delivery table by matching this text in the method title. Empty means one table."
+msgid "How to show tax: auto (follow the WooCommerce cart setting), incl (always add shipping VAT), excl (always net)."
 msgstr ""
 
 #: includes/Admin/views/documentation.php:93
-msgid "Include shipping methods that are switched off. Default: no."
+msgid "Split the output into a prepaid table and a cash-on-delivery table by matching this text in the method title. Empty means one table."
 msgstr ""
 
 #: includes/Admin/views/documentation.php:97
+msgid "Include shipping methods that are switched off. Default: no."
+msgstr ""
+
+#: includes/Admin/views/documentation.php:101
 msgid "Also render the implicit \"Locations not covered by your other zones\" zone."
 msgstr ""
 
-#: includes/Admin/views/documentation.php:103
+#: includes/Admin/views/documentation.php:107
 msgid "How to read the table"
 msgstr ""
 
-#: includes/Admin/views/documentation.php:108
-#: src/shipping-table/edit.js:54
+#: includes/Admin/views/documentation.php:112
+#: src/shipping-table/edit.js:55
 msgid "Zone headings"
 msgstr ""
 
-#: includes/Admin/views/documentation.php:111
+#: includes/Admin/views/documentation.php:115
 msgid "Headings show the zone regions translated into the storefront language — \"Germany\" in an English shop, \"Deutschland\" in a German one — rather than the zone name you typed in wp-admin. Postcodes limit a zone rather than name it, so they are left out."
 msgstr ""
 
-#: includes/Admin/views/documentation.php:119
+#: includes/Admin/views/documentation.php:123
 msgid "A dash instead of a price"
 msgstr ""
 
-#: includes/Admin/views/documentation.php:122
+#: includes/Admin/views/documentation.php:126
 msgid "No cost rule in that method covers that order value — for example when the method is priced by weight rather than by order value. The table says so instead of guessing."
 msgstr ""
 
-#: includes/Admin/views/documentation.php:130
-msgid "Tax"
+#: includes/Admin/views/documentation.php:134
+msgid "An asterisk after a price"
 msgstr ""
 
-#: includes/Admin/views/documentation.php:133
-msgid "Prices are shown gross, including shipping VAT."
-msgstr ""
-
-#: includes/Admin/views/documentation.php:143
-msgid "For developers"
+#: includes/Admin/views/documentation.php:137
+msgid "The amount is right for that order value, but the same Flexible Shipping rule also depends on something the table cannot show - weight, item count, or a free shipping coupon. Hover the asterisk for the detail."
 msgstr ""
 
 #: includes/Admin/views/documentation.php:145
-msgid "Template function"
+#: src/shipping-table/edit.js:75
+msgid "Tax"
+msgstr ""
+
+#: includes/Admin/views/documentation.php:148
+msgid "By default the table follows the WooCommerce setting \"Display prices during cart and checkout\", so a gross-priced shop gets gross prices and a net-priced shop gets net ones. Override it per table with the tax attribute."
 msgstr ""
 
 #: includes/Admin/views/documentation.php:158
+msgid "For developers"
+msgstr ""
+
+#: includes/Admin/views/documentation.php:160
+msgid "Template function"
+msgstr ""
+
+#: includes/Admin/views/documentation.php:173
 msgid "Overriding the markup"
 msgstr ""
 
 #. translators: 1: plugin folder name, 2: theme folder name.
-#: includes/Admin/views/documentation.php:164
+#: includes/Admin/views/documentation.php:179
 #, php-format
 msgid "Copy a file from the plugin's %1$s folder into %2$s in your theme and edit it there. Child theme wins over parent theme, exactly like WooCommerce templates."
 msgstr ""
 
-#: includes/Admin/views/documentation.php:171
+#: includes/Admin/views/documentation.php:186
 msgid "Hooks"
 msgstr ""
 
-#: includes/Admin/views/documentation.php:177
+#: includes/Admin/views/documentation.php:192
 msgid "Action. Fires once every service is registered; receives the service container."
 msgstr ""
 
@@ -210,19 +223,19 @@ msgstr ""
 msgid "%s and up"
 msgstr ""
 
-#: includes/Table/TableFactory.php:89
+#: includes/Table/TableFactory.php:96
 msgid "Free shipping"
 msgstr ""
 
-#: includes/Table/TableFactory.php:97
+#: includes/Table/TableFactory.php:104
 msgid "Reaching this order value is not enough on its own: this method also needs a free shipping coupon."
 msgstr ""
 
-#: includes/Table/TableFactory.php:109
+#: includes/Table/TableFactory.php:116
 msgid "Not available for this order value"
 msgstr ""
 
-#: includes/Table/TableFactory.php:121
+#: includes/Table/TableFactory.php:128
 msgid "This price also depends on a condition the table cannot show, such as weight or item count."
 msgstr ""
 
@@ -238,47 +251,59 @@ msgstr ""
 msgid "All zones"
 msgstr ""
 
-#: src/shipping-table/edit.js:37
+#: src/shipping-table/edit.js:38
 msgid "Table"
 msgstr ""
 
-#: src/shipping-table/edit.js:40
+#: src/shipping-table/edit.js:41
 msgid "Shipping zone"
 msgstr ""
 
-#: src/shipping-table/edit.js:46
+#: src/shipping-table/edit.js:47
 msgid "Leave on \"All zones\" to render one table per zone."
 msgstr ""
 
-#: src/shipping-table/edit.js:59
+#: src/shipping-table/edit.js:60
 msgid "Only with several zones"
 msgstr ""
 
-#: src/shipping-table/edit.js:64
+#: src/shipping-table/edit.js:65
 msgid "Always"
 msgstr ""
 
-#: src/shipping-table/edit.js:65
+#: src/shipping-table/edit.js:66
 msgid "Never"
 msgstr ""
 
-#: src/shipping-table/edit.js:74
-msgid "Cash on delivery match"
-msgstr ""
-
-#: src/shipping-table/edit.js:79
-msgid "Methods whose title contains this text get their own table. Leave empty for a single table."
+#: src/shipping-table/edit.js:80
+msgid "Follow the WooCommerce setting"
 msgstr ""
 
 #: src/shipping-table/edit.js:87
+msgid "Always including tax"
+msgstr ""
+
+#: src/shipping-table/edit.js:94
+msgid "Always excluding tax"
+msgstr ""
+
+#: src/shipping-table/edit.js:107
+msgid "Cash on delivery match"
+msgstr ""
+
+#: src/shipping-table/edit.js:112
+msgid "Methods whose title contains this text get their own table. Leave empty for a single table."
+msgstr ""
+
+#: src/shipping-table/edit.js:120
 msgid "Include disabled methods"
 msgstr ""
 
-#: src/shipping-table/edit.js:96
+#: src/shipping-table/edit.js:129
 msgid "Include \"Locations not covered by your other zones\""
 msgstr ""
 
-#: src/shipping-table/edit.js:115
+#: src/shipping-table/edit.js:148
 msgid "Nothing to show yet. Check that the selected zone has Flexible Shipping methods with cost rules."
 msgstr ""
 
