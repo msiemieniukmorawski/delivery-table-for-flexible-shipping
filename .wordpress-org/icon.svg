@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <rect width="256" height="256" rx="46" fill="#0a0a0a"/>
+  <!-- 3x3 grid, outer cell 48, gap 10, grid spans 46..210 -->
+  <g stroke="#f0f0f0" stroke-width="8" fill="none">
+    <rect x="108" y="50" width="40" height="40" rx="6"/>
+    <rect x="166" y="50" width="40" height="40" rx="6"/>
+    <rect x="50" y="108" width="40" height="40" rx="6"/>
+    <rect x="108" y="108" width="40" height="40" rx="6"/>
+    <rect x="50" y="166" width="40" height="40" rx="6"/>
+  </g>
+  <rect x="46" y="46" width="48" height="48" rx="8" fill="#f0f0f0"/>
+  <rect x="162" y="104" width="48" height="48" rx="8" fill="#4172a4"/>
+  <rect x="104" y="162" width="48" height="48" rx="8" fill="#4172a4"/>
+  <rect x="162" y="162" width="48" height="48" rx="8" fill="#4172a4"/>
+</svg>
