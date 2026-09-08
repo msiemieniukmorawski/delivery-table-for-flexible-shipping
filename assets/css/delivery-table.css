@@ -149,3 +149,31 @@
 	max-width: 900px;
 	font-size: 14px;
 }
+
+/* Indicative prices: a cost that also depends on weight, item count or a coupon. */
+
+.dtfs-cost__marker {
+	margin-left: 2px;
+	border: 0;
+	text-decoration: none;
+	color: var(--dtfs-muted-color, #6b7280);
+	cursor: help;
+}
+
+.dtfs-table__footnote {
+	margin: 8px 0 0;
+	font-size: 0.8125rem;
+	line-height: 1.4;
+	color: var(--dtfs-muted-color, #6b7280);
+}
+
+/* Themes usually ship this, but the table must not depend on it. */
+.dtfs-table .screen-reader-text {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	white-space: nowrap;
+}

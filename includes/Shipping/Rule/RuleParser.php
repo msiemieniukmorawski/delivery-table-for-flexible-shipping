@@ -15,9 +15,12 @@ if (!defined('ABSPATH')) {
  * Translates the `method_rules` array Flexible Shipping stores in the method
  * instance settings into {@see CostRule} objects.
  *
- * Only value-based conditions are understood; weight, item count and product
- * conditions cannot be expressed as a column in an order-value table and are
- * skipped rather than guessed at.
+ * Only value-based conditions can become a column in an order-value table.
+ * A rule that carries other conditions as well still produces a cost, but is
+ * marked conditional so the table can say the price is indicative; a rule that
+ * carries *only* other conditions produces nothing at all, which is what makes
+ * a weight-priced method render as "not available for this order value"
+ * instead of silently as free.
  */
 final class RuleParser
 {
@@ -64,48 +67,66 @@ final class RuleParser
                 continue;
             }
 
-            $cost       = (float) $rawRule['cost_per_order'];
-            $conditions = $rawRule['conditions'] ?? [];
-
-            // No conditions at all: the rule always applies.
-            if (!is_array($conditions) || $conditions === []) {
-                $rules[] = CostRule::flat($cost);
-                continue;
-            }
-
-            foreach ($conditions as $condition) {
-                $rule = $this->toRule($condition, $cost);
-
-                if ($rule !== null) {
-                    $rules[] = $rule;
-                }
-            }
+            array_push($rules, ...$this->rulesFrom($rawRule, (float) $rawRule['cost_per_order']));
         }
 
         return $rules;
     }
 
-    private function toRule(mixed $condition, float $cost): ?CostRule
+    /**
+     * @param  array<string, mixed> $rawRule
+     * @return list<CostRule>
+     */
+    private function rulesFrom(array $rawRule, float $cost): array
     {
-        if (!is_array($condition)) {
-            return null;
+        $conditions = $rawRule['conditions'] ?? [];
+
+        // No conditions at all: the rule always applies.
+        if (!is_array($conditions) || $conditions === []) {
+            return [CostRule::flat($cost)];
         }
 
-        $conditionId = (string) ($condition['condition_id'] ?? self::CONDITION_NONE);
+        $ranges          = [];
+        $alwaysApplies   = false;
+        $otherConditions = false;
 
-        if ($conditionId === self::CONDITION_NONE) {
-            return CostRule::flat($cost);
+        foreach ($conditions as $condition) {
+            if (!is_array($condition)) {
+                continue;
+            }
+
+            switch ((string) ($condition['condition_id'] ?? self::CONDITION_NONE)) {
+                case self::CONDITION_NONE:
+                    $alwaysApplies = true;
+                    break;
+
+                case self::CONDITION_VALUE:
+                    $ranges[] = [
+                        $this->toFloat($condition['min'] ?? null) ?? 0.0,
+                        $this->toFloat($condition['max'] ?? null),
+                    ];
+                    break;
+
+                default:
+                    // Weight, item count, shipping class, product - none of
+                    // which an order-value table can turn into a column.
+                    $otherConditions = true;
+            }
         }
 
-        if ($conditionId !== self::CONDITION_VALUE) {
-            return null;
+        if ($ranges !== []) {
+            return array_map(
+                static fn (array $range): CostRule => new CostRule($range[0], $range[1], $cost, $otherConditions),
+                $ranges
+            );
         }
 
-        return new CostRule(
-            $this->toFloat($condition['min'] ?? null) ?? 0.0,
-            $this->toFloat($condition['max'] ?? null),
-            $cost
-        );
+        if ($alwaysApplies) {
+            return [CostRule::flat($cost, $otherConditions)];
+        }
+
+        // Only conditions this table cannot express: no order-value rule at all.
+        return [];
     }
 
     private function toFloat(mixed $value): ?float

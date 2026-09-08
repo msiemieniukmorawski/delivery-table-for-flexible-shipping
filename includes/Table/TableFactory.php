@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MSM\DeliveryTable\Table;
 
+use MSM\DeliveryTable\Shipping\FreeShipping\FreeShippingThreshold;
 use MSM\DeliveryTable\Shipping\FreeShipping\ThresholdDetector;
 use MSM\DeliveryTable\Shipping\Price\PriceFormatter;
 use MSM\DeliveryTable\Shipping\Rule\RuleParser;
@@ -19,8 +20,8 @@ if (!defined('ABSPATH')) {
  * Builds a {@see DeliveryTable} out of shipping methods.
  *
  * Column boundaries are the union of every price change and every free
- * shipping threshold across the methods in the table, which is what keeps
- * rows aligned when two carriers switch price at different amounts.
+ * shipping threshold across the methods in the table, which is what keeps rows
+ * aligned when two carriers switch price at different amounts.
  */
 final class TableFactory
 {
@@ -42,7 +43,7 @@ final class TableFactory
             return null;
         }
 
-        /** @var list<array{method: WC_Shipping_Method, rules: RuleSet, threshold: float|null}> $parsed */
+        /** @var list<array{method: WC_Shipping_Method, rules: RuleSet, threshold: FreeShippingThreshold|null}> $parsed */
         $parsed      = [];
         $breakpoints = [];
 
@@ -54,8 +55,12 @@ final class TableFactory
 
             array_push($breakpoints, ...$ruleSet->breakpoints());
 
-            if ($threshold !== null && $threshold > 0.0) {
-                $breakpoints[] = $threshold;
+            foreach ($ruleSet->upperBounds() as $upperBound) {
+                $breakpoints[] = $this->prices->round($upperBound + $this->prices->smallestUnit());
+            }
+
+            if ($threshold !== null) {
+                $breakpoints[] = $threshold->amount;
             }
         }
 
@@ -79,27 +84,45 @@ final class TableFactory
         return new DeliveryTable($heading, $columns, $rows);
     }
 
-    private function cell(RuleSet $rules, ?float $threshold, ValueInterval $column): TableCell
+    private function cell(RuleSet $rules, ?FreeShippingThreshold $threshold, ValueInterval $column): TableCell
     {
         $freeLabel = __('Free shipping', 'delivery-table-for-flexible-shipping');
 
         // The dedicated free shipping setting wins over whatever the rules say.
-        if ($threshold !== null && $column->startsAtOrAbove($threshold)) {
-            return TableCell::free($freeLabel);
+        if ($threshold !== null && $column->startsAtOrAbove($threshold->amount)) {
+            $cell = TableCell::free($freeLabel);
+
+            return $threshold->requiresCoupon
+                ? $cell->asApproximate(
+                    __(
+                        'Reaching this order value is not enough on its own: this method also needs a free shipping coupon.',
+                        'delivery-table-for-flexible-shipping'
+                    )
+                )
+                : $cell;
         }
 
-        $netCost = $rules->costFor($column->probeValue());
+        $rule = $rules->cheapestRuleFor($column->probeValue());
 
-        if ($netCost === null) {
+        if ($rule === null) {
             return TableCell::unavailable(
                 __('Not available for this order value', 'delivery-table-for-flexible-shipping')
             );
         }
 
-        $cost = $this->prices->round($this->tax->grossCost($netCost));
+        $cost = $this->prices->round($this->tax->grossCost($rule->cost));
 
-        return $cost <= 0.0
+        $cell = $cost <= 0.0
             ? TableCell::free($freeLabel)
             : TableCell::price($this->prices->html($cost));
+
+        return $rule->conditional
+            ? $cell->asApproximate(
+                __(
+                    'This price also depends on a condition the table cannot show, such as weight or item count.',
+                    'delivery-table-for-flexible-shipping'
+                )
+            )
+            : $cell;
     }
 }

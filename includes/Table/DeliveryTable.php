@@ -28,4 +28,21 @@ final class DeliveryTable
     {
         return $this->rows === [];
     }
+
+    /**
+     * Whether any cell is only indicative, and the table therefore needs its
+     * footnote.
+     */
+    public function hasApproximateCosts(): bool
+    {
+        foreach ($this->rows as $row) {
+            foreach ($row->cells as $cell) {
+                if ($cell->approximate) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
 }

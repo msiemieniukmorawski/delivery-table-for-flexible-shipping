@@ -32,8 +32,15 @@ final class RuleSet implements Countable, IteratorAggregate
         $this->rules = $sorted;
     }
 
-    /** Cheapest cost that applies to the given order value, or null when uncovered. */
-    public function costFor(float $orderValue): ?float
+    /**
+     * Cheapest rule that applies to the given order value, or null when no rule
+     * covers it.
+     *
+     * The whole rule is returned rather than its cost, because the caller also
+     * has to know whether that cost is conditional on something the table
+     * cannot show.
+     */
+    public function cheapestRuleFor(float $orderValue): ?CostRule
     {
         $cheapest = null;
 
@@ -42,8 +49,8 @@ final class RuleSet implements Countable, IteratorAggregate
                 continue;
             }
 
-            if ($cheapest === null || $rule->cost < $cheapest) {
-                $cheapest = $rule->cost;
+            if ($cheapest === null || $rule->cost < $cheapest->cost) {
+                $cheapest = $rule;
             }
         }
 
@@ -51,7 +58,7 @@ final class RuleSet implements Countable, IteratorAggregate
     }
 
     /**
-     * Order values at which the price changes — the column boundaries of the
+     * Order values at which the price changes - the column boundaries of the
      * rendered table.
      *
      * @return list<float>
@@ -67,6 +74,32 @@ final class RuleSet implements Countable, IteratorAggregate
         }
 
         return array_values(array_unique($breakpoints));
+    }
+
+    /**
+     * Order values just past the end of a bounded rule.
+     *
+     * A rule that stops at 99.99 makes 100.00 a boundary just as much as a rule
+     * that starts there: above it the price changes, or the method stops being
+     * available at all. Without these the last band of a rule would be folded
+     * into a wider column and priced as if the rule still applied.
+     *
+     * Returned raw; the caller adds the currency's smallest unit, because only
+     * it knows the shop's precision.
+     *
+     * @return list<float>
+     */
+    public function upperBounds(): array
+    {
+        $bounds = [];
+
+        foreach ($this->rules as $rule) {
+            if ($rule->to !== null && $rule->to > 0.0) {
+                $bounds[] = $rule->to;
+            }
+        }
+
+        return array_values(array_unique($bounds));
     }
 
     public function isEmpty(): bool
