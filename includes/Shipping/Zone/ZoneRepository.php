@@ -51,13 +51,9 @@ final class ZoneRepository
 
     public function byName(string $name): ?WC_Shipping_Zone
     {
-        foreach (WC_Shipping_Zones::get_zones() as $zoneData) {
-            if (!isset($zoneData['zone_name'], $zoneData['zone_id'])) {
-                continue;
-            }
-
-            if (strcasecmp((string) $zoneData['zone_name'], $name) === 0) {
-                return $this->byId((int) $zoneData['zone_id']);
+        foreach ($this->enumerate() as $zone) {
+            if (strcasecmp((string) $zone->get_zone_name(), $name) === 0) {
+                return $zone;
             }
         }
 
@@ -71,25 +67,35 @@ final class ZoneRepository
      */
     public function all(bool $includeRestOfWorld = false): array
     {
-        $zones = [];
-
-        foreach (WC_Shipping_Zones::get_zones() as $zoneData) {
-            if (!isset($zoneData['zone_id'])) {
-                continue;
-            }
-
-            $zone = $this->byId((int) $zoneData['zone_id']);
-
-            if ($zone !== null) {
-                $zones[] = $zone;
-            }
-        }
+        $zones = $this->enumerate();
 
         if ($includeRestOfWorld) {
             $zones[] = $this->restOfWorld();
         }
 
         return $zones;
+    }
+
+    /**
+     * Every zone the shop has defined.
+     *
+     * Deliberately not `WC_Shipping_Zones::get_zones()`: that one defaults to
+     * the "admin" context, which eagerly builds each method's *admin settings
+     * HTML* - on the storefront, on every page view. Besides being wasted work,
+     * it runs form-field code that has no business running outside wp-admin,
+     * and a method whose settings screen touches a wp-admin-only function takes
+     * the whole page down with it. Only zone objects are needed here.
+     *
+     * @return list<WC_Shipping_Zone>
+     */
+    private function enumerate(): array
+    {
+        return array_values(
+            array_filter(
+                WC_Shipping_Zones::get_shipping_zones(),
+                static fn (mixed $zone): bool => $zone instanceof WC_Shipping_Zone
+            )
+        );
     }
 
     public function restOfWorld(): WC_Shipping_Zone
