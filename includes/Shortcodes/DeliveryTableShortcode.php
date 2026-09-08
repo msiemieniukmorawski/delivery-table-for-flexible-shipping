@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MSM\DeliveryTable\Shortcodes;
 
+use MSM\DeliveryTable\Shipping\Tax\TaxDisplay;
 use MSM\DeliveryTable\Table\DeliveryTableRenderer;
 use MSM\DeliveryTable\Table\TableRequest;
 
@@ -35,6 +36,7 @@ final class DeliveryTableShortcode extends Shortcode
             // Empty means one table; splitting off cash on delivery is opt-in.
             'cod_prefix'            => '',
             'zone_headings'         => TableRequest::HEADINGS_AUTO,
+            'tax'                   => TaxDisplay::Auto->value,
             'include_rest_of_world' => 'no',
         ];
     }
@@ -47,7 +49,8 @@ final class DeliveryTableShortcode extends Shortcode
                 includeDisabled: self::toBool($attributes['show_disabled']),
                 cashOnDeliveryNeedle: self::toText($attributes['cod_prefix']),
                 zoneHeadings: TableRequest::normaliseHeadings((string) $attributes['zone_headings']),
-                includeRestOfWorld: self::toBool($attributes['include_rest_of_world'])
+                includeRestOfWorld: self::toBool($attributes['include_rest_of_world']),
+                taxDisplay: TaxDisplay::fromAttribute((string) $attributes['tax'])
             )
         );
     }

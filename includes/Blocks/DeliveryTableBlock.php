@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MSM\DeliveryTable\Blocks;
 
 use MSM\DeliveryTable\Contracts\Registrable;
+use MSM\DeliveryTable\Shipping\Tax\TaxDisplay;
 use MSM\DeliveryTable\Table\DeliveryTableRenderer;
 use MSM\DeliveryTable\Table\TableRequest;
 use WC_Shipping_Zones;
@@ -70,7 +71,8 @@ final class DeliveryTableBlock implements Registrable
                 includeDisabled: !empty($attributes['showDisabled']),
                 cashOnDeliveryNeedle: trim((string) ($attributes['codPrefix'] ?? '')),
                 zoneHeadings: TableRequest::normaliseHeadings((string) ($attributes['zoneHeadings'] ?? '')),
-                includeRestOfWorld: !empty($attributes['includeRestOfWorld'])
+                includeRestOfWorld: !empty($attributes['includeRestOfWorld']),
+                taxDisplay: TaxDisplay::fromAttribute((string) ($attributes['taxDisplay'] ?? ''))
             )
         );
     }

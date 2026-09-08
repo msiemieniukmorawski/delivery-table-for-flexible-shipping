@@ -14,6 +14,7 @@ declare(strict_types=1);
 
 use MSM\DeliveryTable\Container;
 use MSM\DeliveryTable\Plugin;
+use MSM\DeliveryTable\Shipping\Tax\TaxDisplay;
 use MSM\DeliveryTable\Table\TableRequest;
 
 if (!defined('ABSPATH')) {
@@ -39,6 +40,7 @@ if (!function_exists('dtfs_shipping_table')) {
      *     show_disabled?: bool,
      *     cod_prefix?: string,
      *     zone_headings?: string,
+     *     tax?: string,
      *     include_rest_of_world?: bool
      * } $args
      * @param bool $echo Print instead of returning.
@@ -55,7 +57,8 @@ if (!function_exists('dtfs_shipping_table')) {
                 includeDisabled: (bool) ($args['show_disabled'] ?? false),
                 cashOnDeliveryNeedle: trim((string) ($args['cod_prefix'] ?? '')),
                 zoneHeadings: TableRequest::normaliseHeadings((string) ($args['zone_headings'] ?? '')),
-                includeRestOfWorld: (bool) ($args['include_rest_of_world'] ?? false)
+                includeRestOfWorld: (bool) ($args['include_rest_of_world'] ?? false),
+                taxDisplay: TaxDisplay::fromAttribute((string) ($args['tax'] ?? ''))
             )
         );
 

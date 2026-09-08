@@ -29,6 +29,8 @@ Shipping and the table follows on the next page load.
   typed into wp-admin. Postcodes limit a zone rather than name it, so they are left out.
 * **Honest about what it cannot price.** A method priced by weight or item count has no order-value
   rule to read, so its cell shows a dash and says why, instead of quietly printing "Free shipping".
+  A price that holds only when a weight condition or a coupon also applies is marked with an
+  asterisk rather than presented as final.
 * **Correct in any currency.** Range boundaries follow the shop's price precision, so zero-decimal
   currencies such as HUF and JPY read correctly.
 * **Cash on delivery, optionally.** Give it a phrase to match in the method title and it splits the
@@ -38,8 +40,8 @@ Shipping and the table follows on the next page load.
 
 `[dtfs_shipping_table]`
 
-Attributes: `zone`, `zone_headings`, `cod_prefix`, `show_disabled`, `include_rest_of_world`. All of
-them are documented under **WooCommerce → Delivery Table**.
+Attributes: `zone`, `zone_headings`, `tax`, `cod_prefix`, `show_disabled`, `include_rest_of_world`.
+All of them are documented under **WooCommerce → Delivery Table**.
 
 = Block =
 
@@ -76,7 +78,9 @@ Yes: `[dtfs_shipping_table zone="Europe"]`, by zone name or by zone id.
 
 = Are prices shown with tax? =
 
-Yes, gross, including shipping VAT.
+By default the table follows the WooCommerce setting "Display prices during cart and checkout", so it
+matches the rest of your shop. Force it either way with `[dtfs_shipping_table tax="incl"]` or
+`tax="excl"`.
 
 = Can I change the markup? =
 

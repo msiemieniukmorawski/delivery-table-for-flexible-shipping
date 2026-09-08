@@ -13,6 +13,9 @@
             "Zone headings": [
                 "Nag\u0142\u00f3wki stref"
             ],
+            "Tax": [
+                "Podatek"
+            ],
             "All zones": [
                 "Wszystkie strefy"
             ],
@@ -33,6 +36,15 @@
             ],
             "Never": [
                 "Nigdy"
+            ],
+            "Follow the WooCommerce setting": [
+                "Zgodnie z ustawieniem WooCommerce"
+            ],
+            "Always including tax": [
+                "Zawsze z podatkiem"
+            ],
+            "Always excluding tax": [
+                "Zawsze bez podatku"
             ],
             "Cash on delivery match": [
                 "Dopasowanie pobrania"

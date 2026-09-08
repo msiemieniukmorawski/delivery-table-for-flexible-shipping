@@ -85,6 +85,10 @@ $dtfs_attributes_table = static function (array $attributes): void {
 			__('Zone headings: auto (only when several zones are shown), show, or hide.', 'delivery-table-for-flexible-shipping'),
 			'[' . $dtfs_tag . ' zone_headings="show"]',
 		],
+		'tax' => [
+			__('How to show tax: auto (follow the WooCommerce cart setting), incl (always add shipping VAT), excl (always net).', 'delivery-table-for-flexible-shipping'),
+			'[' . $dtfs_tag . ' tax="incl"]',
+		],
 		'cod_prefix' => [
 			__('Split the output into a prepaid table and a cash-on-delivery table by matching this text in the method title. Empty means one table.', 'delivery-table-for-flexible-shipping'),
 			'[' . $dtfs_tag . ' cod_prefix="Cash on delivery"]',
@@ -127,11 +131,22 @@ $dtfs_attributes_table = static function (array $attributes): void {
 				</td>
 			</tr>
 			<tr>
+				<td><strong><?php esc_html_e('An asterisk after a price', 'delivery-table-for-flexible-shipping'); ?></strong></td>
+				<td>
+					<?php
+					esc_html_e(
+						'The amount is right for that order value, but the same Flexible Shipping rule also depends on something the table cannot show - weight, item count, or a free shipping coupon. Hover the asterisk for the detail.',
+						'delivery-table-for-flexible-shipping'
+					);
+					?>
+				</td>
+			</tr>
+			<tr>
 				<td><strong><?php esc_html_e('Tax', 'delivery-table-for-flexible-shipping'); ?></strong></td>
 				<td>
 					<?php
 					esc_html_e(
-						'Prices are shown gross, including shipping VAT.',
+						'By default the table follows the WooCommerce setting "Display prices during cart and checkout", so a gross-priced shop gets gross prices and a net-priced shop gets net ones. Override it per table with the tax attribute.',
 						'delivery-table-for-flexible-shipping'
 					);
 					?>
