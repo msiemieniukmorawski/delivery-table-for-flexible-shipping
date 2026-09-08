@@ -11,6 +11,24 @@ table follows.
 
 ---
 
+## Screenshots
+
+Two regions on one page. Order value ranges are the columns, shipping methods the rows; free
+shipping is called free, and an asterisk marks a price that depends on more than the order value.
+
+[![The delivery table on a storefront page](.wordpress-org/screenshot-1.png)](.wordpress-org/screenshot-1.png)
+
+| The block | Placing the table |
+| --- | --- |
+| [![The Delivery Table block inspector](.wordpress-org/screenshot-2.png)](.wordpress-org/screenshot-2.png) | [![Shortcode attributes in wp-admin](.wordpress-org/screenshot-3.png)](.wordpress-org/screenshot-3.png) |
+| Zone, headings, tax and the cash-on-delivery split, in the block inspector. | Every shortcode attribute, documented under **WooCommerce → Delivery Table**. |
+
+Reading the table, and the developer surface:
+
+[![Reading the table, and the PHP API](.wordpress-org/screenshot-4.png)](.wordpress-org/screenshot-4.png)
+
+---
+
 ## Installation
 
 1. Install and activate WooCommerce and Flexible Shipping.
@@ -32,6 +50,7 @@ plugin has no settings of its own on purpose.
 | --- | --- | --- |
 | `zone` | Shipping zone name or id. Empty renders one table per zone. | all zones |
 | `zone_headings` | `auto` (only with several zones), `show`, `hide`. | `auto` |
+| `tax` | `auto` (follow the WooCommerce cart setting), `incl`, `excl`. | `auto` |
 | `cod_prefix` | Split into prepaid / cash-on-delivery tables by matching this text in the method title. | *(one table)* |
 | `show_disabled` | Include disabled shipping methods. | `0` |
 | `include_rest_of_world` | Also render the implicit "Locations not covered by your other zones" zone. | `no` |
@@ -58,11 +77,29 @@ the shop's currency precision, so a zero-decimal currency such as HUF reads corr
 English shop, "Deutschland" in a German one — rather than the zone name typed into wp-admin.
 Postcodes limit a zone rather than name it, so they are left out.
 
+**Zones are grouped by region.** Shops often split one country across several zones — a courier zone
+and a narrower one for certain postcodes. "What does delivery to Germany cost?" is one question, so
+those zones are gathered under one heading, in the order you arranged them, however far apart they
+sit in wp-admin. A zone covering several countries at once keeps its own combined heading. Every
+region carries an anchor built from its country codes, so `/delivery/#dtfs-region-de` links straight
+to one table.
+
+**WooCommerce's own methods are priced too.** Flat rate, local pickup and free shipping are read from
+their own settings, and Flexible Shipping's rules take over whenever they are switched on for one of
+those methods. A flat rate written as a formula such as `10 + (2 * [qty])` depends on the basket
+rather than the order value, so it shows a dash rather than a number that would be wrong.
+
 **A dash** means no cost rule in that method covers that order value, typically because the method is
 priced by weight or item count. The table says so rather than guessing, and in particular never
 prints "Free shipping" for a range it cannot price.
 
-**Prices** are gross, including shipping VAT.
+**An asterisk** means the amount is right for that order value, but the same Flexible Shipping rule
+also depends on something the table cannot show - a weight or item-count condition, or a free
+shipping coupon the customer must still hold. Hovering it explains which.
+
+**Prices** follow the WooCommerce "Display prices during cart and checkout" setting by default, so a
+gross-priced shop gets gross prices and a net-priced shop gets net ones. Override it per table with
+`tax="incl"` or `tax="excl"`.
 
 ---
 

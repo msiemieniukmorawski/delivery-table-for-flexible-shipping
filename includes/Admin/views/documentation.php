@@ -85,6 +85,10 @@ $dtfs_attributes_table = static function (array $attributes): void {
 			__('Zone headings: auto (only when several zones are shown), show, or hide.', 'delivery-table-for-flexible-shipping'),
 			'[' . $dtfs_tag . ' zone_headings="show"]',
 		],
+		'tax' => [
+			__('How to show tax: auto (follow the WooCommerce cart setting), incl (always add shipping VAT), excl (always net).', 'delivery-table-for-flexible-shipping'),
+			'[' . $dtfs_tag . ' tax="incl"]',
+		],
 		'cod_prefix' => [
 			__('Split the output into a prepaid table and a cash-on-delivery table by matching this text in the method title. Empty means one table.', 'delivery-table-for-flexible-shipping'),
 			'[' . $dtfs_tag . ' cod_prefix="Cash on delivery"]',
@@ -116,6 +120,28 @@ $dtfs_attributes_table = static function (array $attributes): void {
 				</td>
 			</tr>
 			<tr>
+				<td><strong><?php esc_html_e('Zones grouped by region', 'delivery-table-for-flexible-shipping'); ?></strong></td>
+				<td>
+					<?php
+					esc_html_e(
+						'Several zones covering the same place are shown together under one heading, in the order you arranged them, however far apart they sit in wp-admin. A zone covering several countries at once keeps its own combined heading. Each region carries an anchor built from its country codes — #dtfs-region-de, or #dtfs-region-de-fr — so you can link straight to one table.',
+						'delivery-table-for-flexible-shipping'
+					);
+					?>
+				</td>
+			</tr>
+			<tr>
+				<td><strong><?php esc_html_e('Methods WooCommerce provides itself', 'delivery-table-for-flexible-shipping'); ?></strong></td>
+				<td>
+					<?php
+					esc_html_e(
+						'Flat rate, local pickup and free shipping are priced from their own settings, and Flexible Shipping\'s rules take over whenever they are switched on for one of those methods. A flat rate whose cost is a formula rather than a fixed amount depends on the basket, not the order value, so it shows a dash.',
+						'delivery-table-for-flexible-shipping'
+					);
+					?>
+				</td>
+			</tr>
+			<tr>
 				<td><strong><?php esc_html_e('A dash instead of a price', 'delivery-table-for-flexible-shipping'); ?></strong></td>
 				<td>
 					<?php
@@ -127,11 +153,22 @@ $dtfs_attributes_table = static function (array $attributes): void {
 				</td>
 			</tr>
 			<tr>
+				<td><strong><?php esc_html_e('An asterisk after a price', 'delivery-table-for-flexible-shipping'); ?></strong></td>
+				<td>
+					<?php
+					esc_html_e(
+						'The amount is right for that order value, but the same Flexible Shipping rule also depends on something the table cannot show - weight, item count, or a free shipping coupon. Hover the asterisk for the detail.',
+						'delivery-table-for-flexible-shipping'
+					);
+					?>
+				</td>
+			</tr>
+			<tr>
 				<td><strong><?php esc_html_e('Tax', 'delivery-table-for-flexible-shipping'); ?></strong></td>
 				<td>
 					<?php
 					esc_html_e(
-						'Prices are shown gross, including shipping VAT.',
+						'By default the table follows the WooCommerce setting "Display prices during cart and checkout", so a gross-priced shop gets gross prices and a net-priced shop gets net ones. Override it per table with the tax attribute.',
 						'delivery-table-for-flexible-shipping'
 					);
 					?>
@@ -144,6 +181,7 @@ $dtfs_attributes_table = static function (array $attributes): void {
 
 	<h3><?php esc_html_e('Template function', 'delivery-table-for-flexible-shipping'); ?></h3>
 
+	<?php // phpcs:disable Squiz.PHP.EmbeddedPhp -- <pre> has to hug its content, or the rendered code block gains a blank first line. ?>
 	<pre class="dtfs-doc-code"><?php
 	echo esc_html(
 		'// Anywhere in a theme template.' . "\n"
@@ -154,6 +192,7 @@ $dtfs_attributes_table = static function (array $attributes): void {
 		. '$zones = dtfs()->zones()->all();'
 	);
 	?></pre>
+	<?php // phpcs:enable Squiz.PHP.EmbeddedPhp ?>
 
 	<h3><?php esc_html_e('Overriding the markup', 'delivery-table-for-flexible-shipping'); ?></h3>
 

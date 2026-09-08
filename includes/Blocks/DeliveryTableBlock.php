@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace MSM\DeliveryTable\Blocks;
 
 use MSM\DeliveryTable\Contracts\Registrable;
+use MSM\DeliveryTable\Shipping\Tax\TaxDisplay;
 use MSM\DeliveryTable\Table\DeliveryTableRenderer;
 use MSM\DeliveryTable\Table\TableRequest;
 use WC_Shipping_Zones;
@@ -70,7 +71,8 @@ final class DeliveryTableBlock implements Registrable
                 includeDisabled: !empty($attributes['showDisabled']),
                 cashOnDeliveryNeedle: trim((string) ($attributes['codPrefix'] ?? '')),
                 zoneHeadings: TableRequest::normaliseHeadings((string) ($attributes['zoneHeadings'] ?? '')),
-                includeRestOfWorld: !empty($attributes['includeRestOfWorld'])
+                includeRestOfWorld: !empty($attributes['includeRestOfWorld']),
+                taxDisplay: TaxDisplay::fromAttribute((string) ($attributes['taxDisplay'] ?? ''))
             )
         );
     }
@@ -98,14 +100,12 @@ final class DeliveryTableBlock implements Registrable
     {
         $options = [];
 
-        foreach (WC_Shipping_Zones::get_zones() as $zoneData) {
-            if (!isset($zoneData['zone_id'])) {
-                continue;
-            }
-
+        // Not `get_zones()`: it would build every method's admin settings HTML
+        // just to read back a name. See ZoneRepository::enumerate().
+        foreach (WC_Shipping_Zones::get_shipping_zones() as $zone) {
             $options[] = [
-                'value' => (string) $zoneData['zone_id'],
-                'label' => (string) ($zoneData['zone_name'] ?? $zoneData['zone_id']),
+                'value' => (string) $zone->get_id(),
+                'label' => (string) ($zone->get_zone_name() ?: $zone->get_id()),
             ];
         }
 

@@ -22,7 +22,7 @@ final class MethodRepository
     public function inZone(WC_Shipping_Zone $zone, bool $includeDisabled = false): array
     {
         $methods = array_filter(
-            $zone->get_shipping_methods(true),
+            $this->readMethods($zone),
             static fn (mixed $method): bool => $method instanceof WC_Shipping_Method
         );
 
@@ -34,6 +34,40 @@ final class MethodRepository
         }
 
         return array_values($methods);
+    }
+
+    /**
+     * A zone's method instances, without the wp-admin baggage.
+     *
+     * `WC_Shipping_Zone::get_shipping_methods()` is written for the settings
+     * screen: for every method that offers a settings modal it renders the
+     * whole *admin options form* and hangs it off the object. On a storefront
+     * page that is pure waste, and worse than waste - the form fields of a
+     * third-party method may call functions that only exist inside wp-admin,
+     * which takes the page down with a fatal rather than a missing table.
+     *
+     * Saying "we do not want the settings modal" through WooCommerce's own
+     * filter skips that rendering entirely. The filter is removed immediately,
+     * so nothing outside this call sees it.
+     *
+     * The first argument is `$enabled_only`; passing true would drop disabled
+     * methods in the data store and leave {@see self::inZone()} nothing to
+     * include when asked for them.
+     *
+     * @return array<int, mixed>
+     */
+    private function readMethods(WC_Shipping_Zone $zone): array
+    {
+        $withoutSettingsModal = static fn (mixed $supports, string $feature): bool
+            => $feature === 'instance-settings-modal' ? false : (bool) $supports;
+
+        add_filter('woocommerce_shipping_method_supports', $withoutSettingsModal, 10, 2);
+
+        try {
+            return $zone->get_shipping_methods(false);
+        } finally {
+            remove_filter('woocommerce_shipping_method_supports', $withoutSettingsModal, 10);
+        }
     }
 
     /**

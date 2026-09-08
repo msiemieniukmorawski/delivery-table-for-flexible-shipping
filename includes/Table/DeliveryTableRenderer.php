@@ -7,7 +7,7 @@ namespace MSM\DeliveryTable\Table;
 use MSM\DeliveryTable\Assets\AssetManager;
 use MSM\DeliveryTable\Rendering\Template;
 use MSM\DeliveryTable\Shipping\Method\MethodRepository;
-use MSM\DeliveryTable\Shipping\Zone\ZoneLabeller;
+use MSM\DeliveryTable\Shipping\Zone\ZoneGrouper;
 use MSM\DeliveryTable\Shipping\Zone\ZoneRepository;
 use WC_Shipping_Zone;
 
@@ -25,7 +25,7 @@ final class DeliveryTableRenderer
 {
     public function __construct(
         private readonly ZoneRepository $zones,
-        private readonly ZoneLabeller $labeller,
+        private readonly ZoneGrouper $grouper,
         private readonly MethodRepository $methods,
         private readonly TableFactory $tables,
         private readonly Template $template,
@@ -82,26 +82,35 @@ final class DeliveryTableRenderer
      * Tables are rendered here rather than inside the zones view so that both
      * `table/zones` and `table/table` stay independently overridable by a theme.
      *
+     * Zones serving the same region become one block, so a shop that splits
+     * Poland across a courier zone and a pickup zone still answers "delivery to
+     * Poland" in one place, under one anchor.
+     *
      * @param  list<WC_Shipping_Zone> $zones
-     * @return list<array{label: string, tables: list<string>}>
+     * @return list<array{id: string, label: string, countries: list<string>, tables: list<string>}>
      */
     private function buildBlocks(array $zones, TableRequest $request): array
     {
         $blocks = [];
 
-        foreach ($zones as $zone) {
-            $tables = array_map(
-                fn (DeliveryTable $table): string => $this->template->render('table/table', ['table' => $table]),
-                $this->tablesFor($zone, $request)
-            );
+        foreach ($this->grouper->group($zones) as $group) {
+            $tables = [];
+
+            foreach ($group->zones as $zone) {
+                foreach ($this->tablesFor($zone, $request) as $table) {
+                    $tables[] = $this->template->render('table/table', ['table' => $table]);
+                }
+            }
 
             if ($tables === []) {
                 continue;
             }
 
             $blocks[] = [
-                'label'  => $this->labeller->label($zone),
-                'tables' => $tables,
+                'id'        => $group->id,
+                'label'     => $group->label,
+                'countries' => $group->countries,
+                'tables'    => $tables,
             ];
         }
 
@@ -133,7 +142,7 @@ final class DeliveryTableRenderer
         $tables = [];
 
         foreach ($groups as $key => $groupMethods) {
-            $table = $this->tables->create($headings[$key], $groupMethods);
+            $table = $this->tables->create($headings[$key], $groupMethods, $request->taxDisplay);
 
             if ($table !== null && !$table->isEmpty()) {
                 $tables[] = $table;

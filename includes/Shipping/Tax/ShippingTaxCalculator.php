@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace MSM\DeliveryTable\Shipping\Tax;
 
+use WC_Shipping_Method;
 use WC_Tax;
 
 if (!defined('ABSPATH')) {
@@ -17,8 +18,24 @@ if (!defined('ABSPATH')) {
  */
 final class ShippingTaxCalculator
 {
+    /** The one `tax_status` value that means "add tax to this method's costs". */
+    private const TAXABLE = 'taxable';
+
     /** Tax rates are per request and per tax class; caching them saves repeated DB hits. */
     private array $rateCache = [];
+
+    /**
+     * Whether a method's costs are taxed at all.
+     *
+     * A method set to "None" is priced exactly as entered, so grossing it up
+     * would overstate what the customer pays. WooCommerce itself compares the
+     * setting to "taxable" and treats every other value as untaxed; this
+     * follows that reading rather than inventing a looser one.
+     */
+    public function isTaxable(WC_Shipping_Method $method): bool
+    {
+        return (string) ($method->tax_status ?? self::TAXABLE) === self::TAXABLE;
+    }
 
     /**
      * Cost as it should be printed: gross when the shop displays cart prices

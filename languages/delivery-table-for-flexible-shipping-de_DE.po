@@ -92,68 +92,81 @@ msgid "Zone headings: auto (only when several zones are shown), show, or hide."
 msgstr "Zonenüberschriften: auto (nur bei mehreren Zonen), show oder hide."
 
 #: includes/Admin/views/documentation.php:89
+msgid "How to show tax: auto (follow the WooCommerce cart setting), incl (always add shipping VAT), excl (always net)."
+msgstr "Steuerdarstellung: auto (folgt der WooCommerce-Warenkorbeinstellung), incl (immer mit Versand-MwSt.), excl (immer netto)."
+
+#: includes/Admin/views/documentation.php:93
 msgid "Split the output into a prepaid table and a cash-on-delivery table by matching this text in the method title. Empty means one table."
 msgstr "Teilt die Ausgabe in eine Vorkasse- und eine Nachnahme-Tabelle, indem dieser Text im Namen der Versandart gesucht wird. Leer bedeutet eine Tabelle."
 
-#: includes/Admin/views/documentation.php:93
+#: includes/Admin/views/documentation.php:97
 msgid "Include shipping methods that are switched off. Default: no."
 msgstr "Deaktivierte Versandarten einbeziehen. Standard: nein."
 
-#: includes/Admin/views/documentation.php:97
+#: includes/Admin/views/documentation.php:101
 msgid "Also render the implicit \"Locations not covered by your other zones\" zone."
 msgstr "Auch die implizite Zone „Regionen, die nicht von deinen anderen Zonen abgedeckt werden“ ausgeben."
 
-#: includes/Admin/views/documentation.php:103
+#: includes/Admin/views/documentation.php:107
 msgid "How to read the table"
 msgstr "Die Tabelle lesen"
 
-#: includes/Admin/views/documentation.php:108
-#: src/shipping-table/edit.js:54
+#: includes/Admin/views/documentation.php:112
+#: src/shipping-table/edit.js:55
 msgid "Zone headings"
 msgstr "Zonenüberschriften"
 
-#: includes/Admin/views/documentation.php:111
+#: includes/Admin/views/documentation.php:115
 msgid "Headings show the zone regions translated into the storefront language — \"Germany\" in an English shop, \"Deutschland\" in a German one — rather than the zone name you typed in wp-admin. Postcodes limit a zone rather than name it, so they are left out."
 msgstr "Überschriften zeigen die Regionen der Zone in der Sprache des Shops — „Germany“ in einem englischen Shop, „Deutschland“ in einem deutschen — statt des im Backend eingetippten Zonennamens. Postleitzahlen grenzen eine Zone ein, benennen sie aber nicht, und bleiben daher weg."
 
-#: includes/Admin/views/documentation.php:119
+#: includes/Admin/views/documentation.php:123
 msgid "A dash instead of a price"
 msgstr "Ein Strich statt eines Preises"
 
-#: includes/Admin/views/documentation.php:122
+#: includes/Admin/views/documentation.php:126
 msgid "No cost rule in that method covers that order value — for example when the method is priced by weight rather than by order value. The table says so instead of guessing."
 msgstr "Keine Kostenregel dieser Versandart deckt diesen Bestellwert ab — etwa wenn die Versandart nach Gewicht statt nach Bestellwert berechnet wird. Die Tabelle sagt das offen, statt zu raten."
 
-#: includes/Admin/views/documentation.php:130
+#: includes/Admin/views/documentation.php:134
+msgid "An asterisk after a price"
+msgstr "Ein Sternchen hinter einem Preis"
+
+#: includes/Admin/views/documentation.php:137
+msgid "The amount is right for that order value, but the same Flexible Shipping rule also depends on something the table cannot show - weight, item count, or a free shipping coupon. Hover the asterisk for the detail."
+msgstr "Der Betrag stimmt für diesen Bestellwert, aber dieselbe Flexible-Shipping-Regel hängt zusätzlich von etwas ab, das die Tabelle nicht zeigt — Gewicht, Artikelanzahl oder einem Gutschein für kostenlosen Versand. Fahre über das Sternchen, um die Einzelheit zu sehen."
+
+#: includes/Admin/views/documentation.php:145
+#: src/shipping-table/edit.js:75
 msgid "Tax"
 msgstr "Steuer"
 
-#: includes/Admin/views/documentation.php:133
-msgid "Prices are shown gross, including shipping VAT."
-msgstr "Preise werden brutto inklusive Versand-MwSt. angezeigt."
+#: includes/Admin/views/documentation.php:148
+msgid "By default the table follows the WooCommerce setting \"Display prices during cart and checkout\", so a gross-priced shop gets gross prices and a net-priced shop gets net ones. Override it per table with the tax attribute."
+msgstr "Standardmäßig folgt die Tabelle der WooCommerce-Einstellung „Preisanzeige im Warenkorb und an der Kasse“, ein Brutto-Shop bekommt also Bruttopreise und ein Netto-Shop Nettopreise. Pro Tabelle lässt sich das mit dem Attribut tax überschreiben."
 
-#: includes/Admin/views/documentation.php:143
+#: includes/Admin/views/documentation.php:158
 msgid "For developers"
 msgstr "Für Entwickler"
 
-#: includes/Admin/views/documentation.php:145
+#: includes/Admin/views/documentation.php:160
 msgid "Template function"
 msgstr "Template-Funktion"
 
-#: includes/Admin/views/documentation.php:158
+#: includes/Admin/views/documentation.php:173
 msgid "Overriding the markup"
 msgstr "Markup überschreiben"
 
 #. translators: 1: plugin folder name, 2: theme folder name.
-#: includes/Admin/views/documentation.php:164
+#: includes/Admin/views/documentation.php:179
 msgid "Copy a file from the plugin's %1$s folder into %2$s in your theme and edit it there. Child theme wins over parent theme, exactly like WooCommerce templates."
 msgstr "Kopiere eine Datei aus dem Ordner %1$s des Plugins nach %2$s in deinem Theme und bearbeite sie dort. Das Child-Theme gewinnt gegen das Parent-Theme, genau wie bei WooCommerce-Templates."
 
-#: includes/Admin/views/documentation.php:171
+#: includes/Admin/views/documentation.php:186
 msgid "Hooks"
 msgstr "Hooks"
 
-#: includes/Admin/views/documentation.php:177
+#: includes/Admin/views/documentation.php:192
 msgid "Action. Fires once every service is registered; receives the service container."
 msgstr "Action. Wird ausgelöst, sobald alle Services registriert sind; erhält den Service-Container."
 
@@ -203,63 +216,87 @@ msgstr "%1$s – %2$s"
 msgid "%s and up"
 msgstr "Ab %s"
 
-#: includes/Table/TableFactory.php:84
+#: includes/Table/TableFactory.php:96
 msgid "Free shipping"
 msgstr "Kostenloser Versand"
 
-#: includes/Table/TableFactory.php:95
+#: includes/Table/TableFactory.php:104
+msgid "Reaching this order value is not enough on its own: this method also needs a free shipping coupon."
+msgstr "Dieser Bestellwert allein genügt nicht: Diese Versandart braucht zusätzlich einen Gutschein für kostenlosen Versand."
+
+#: includes/Table/TableFactory.php:116
 msgid "Not available for this order value"
 msgstr "Für diesen Bestellwert nicht verfügbar"
+
+#: includes/Table/TableFactory.php:128
+msgid "This price also depends on a condition the table cannot show, such as weight or item count."
+msgstr "Dieser Preis hängt zusätzlich von einer Bedingung ab, die die Tabelle nicht zeigt — etwa Gewicht oder Artikelanzahl."
 
 #: templates/table/table.php:21
 msgid "Delivery method"
 msgstr "Versandart"
 
+#: templates/table/table.php:50
+msgid "* This price also depends on something this table cannot show, such as weight, item count or a coupon. The final cost is calculated at checkout."
+msgstr "* Dieser Preis hängt zusätzlich von etwas ab, das diese Tabelle nicht zeigt — Gewicht, Artikelanzahl oder einem Gutschein. Der endgültige Betrag wird an der Kasse berechnet."
+
 #: src/shipping-table/edit.js:22
 msgid "All zones"
 msgstr "Alle Zonen"
 
-#: src/shipping-table/edit.js:37
+#: src/shipping-table/edit.js:38
 msgid "Table"
 msgstr "Tabelle"
 
-#: src/shipping-table/edit.js:40
+#: src/shipping-table/edit.js:41
 msgid "Shipping zone"
 msgstr "Versandzone"
 
-#: src/shipping-table/edit.js:46
+#: src/shipping-table/edit.js:47
 msgid "Leave on \"All zones\" to render one table per zone."
 msgstr "Auf „Alle Zonen“ lassen, um pro Zone eine Tabelle auszugeben."
 
-#: src/shipping-table/edit.js:59
+#: src/shipping-table/edit.js:60
 msgid "Only with several zones"
 msgstr "Nur bei mehreren Zonen"
 
-#: src/shipping-table/edit.js:64
+#: src/shipping-table/edit.js:65
 msgid "Always"
 msgstr "Immer"
 
-#: src/shipping-table/edit.js:65
+#: src/shipping-table/edit.js:66
 msgid "Never"
 msgstr "Nie"
 
-#: src/shipping-table/edit.js:74
+#: src/shipping-table/edit.js:80
+msgid "Follow the shop setting"
+msgstr "Der Shop-Einstellung folgen"
+
+#: src/shipping-table/edit.js:87
+msgid "Always including tax"
+msgstr "Immer inklusive Steuer"
+
+#: src/shipping-table/edit.js:94
+msgid "Always excluding tax"
+msgstr "Immer ohne Steuer"
+
+#: src/shipping-table/edit.js:107
 msgid "Cash on delivery match"
 msgstr "Nachnahme-Erkennung"
 
-#: src/shipping-table/edit.js:79
+#: src/shipping-table/edit.js:112
 msgid "Methods whose title contains this text get their own table. Leave empty for a single table."
 msgstr "Versandarten, deren Name diesen Text enthält, bekommen eine eigene Tabelle. Leer lassen für eine einzige Tabelle."
 
-#: src/shipping-table/edit.js:87
+#: src/shipping-table/edit.js:120
 msgid "Include disabled methods"
 msgstr "Deaktivierte Versandarten einbeziehen"
 
-#: src/shipping-table/edit.js:96
+#: src/shipping-table/edit.js:129
 msgid "Include \"Locations not covered by your other zones\""
 msgstr "„Regionen, die nicht von deinen anderen Zonen abgedeckt werden“ einbeziehen"
 
-#: src/shipping-table/edit.js:115
+#: src/shipping-table/edit.js:148
 msgid "Nothing to show yet. Check that the selected zone has Flexible Shipping methods with cost rules."
 msgstr "Noch nichts anzuzeigen. Prüfe, ob die gewählte Zone Flexible-Shipping-Versandarten mit Kostenregeln hat."
 
@@ -297,3 +334,7 @@ msgstr "flexible shipping"
 msgctxt "block keyword"
 msgid "table"
 msgstr "tabelle"
+
+#: src/shipping-table/edit.js:100
+msgid "The shop setting is \"Display prices during cart and checkout\" in WooCommerce."
+msgstr "Die Shop-Einstellung ist „Preise im Warenkorb und an der Kasse anzeigen“ in WooCommerce."

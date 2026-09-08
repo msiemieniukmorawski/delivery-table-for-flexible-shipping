@@ -28,6 +28,7 @@ export default function Edit( { name, attributes, setAttributes } ) {
 		showDisabled,
 		codPrefix,
 		zoneHeadings,
+		taxDisplay,
 		includeRestOfWorld,
 	} = attributes;
 
@@ -66,6 +67,42 @@ export default function Edit( { name, attributes, setAttributes } ) {
 						] }
 						onChange={ ( value ) =>
 							setAttributes( { zoneHeadings: value } )
+						}
+					/>
+
+					<SelectControl
+						__nextHasNoMarginBottom
+						label={ __( 'Tax', 'delivery-table-for-flexible-shipping' ) }
+						value={ taxDisplay }
+						options={ [
+							{
+								value: 'auto',
+								label: __(
+									'Follow the shop setting',
+									'delivery-table-for-flexible-shipping'
+								),
+							},
+							{
+								value: 'incl',
+								label: __(
+									'Always including tax',
+									'delivery-table-for-flexible-shipping'
+								),
+							},
+							{
+								value: 'excl',
+								label: __(
+									'Always excluding tax',
+									'delivery-table-for-flexible-shipping'
+								),
+							},
+						] }
+						help={ __(
+							'The shop setting is "Display prices during cart and checkout" in WooCommerce.',
+							'delivery-table-for-flexible-shipping'
+						) }
+						onChange={ ( value ) =>
+							setAttributes( { taxDisplay: value } )
 						}
 					/>
 

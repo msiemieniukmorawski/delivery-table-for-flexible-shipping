@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace MSM\DeliveryTable\Table;
 
+use MSM\DeliveryTable\Shipping\Tax\TaxDisplay;
+
 if (!defined('ABSPATH')) {
     exit;
 }
@@ -23,7 +25,8 @@ final class TableRequest
         public readonly bool $includeDisabled = false,
         public readonly string $cashOnDeliveryNeedle = '',
         public readonly string $zoneHeadings = self::HEADINGS_AUTO,
-        public readonly bool $includeRestOfWorld = false
+        public readonly bool $includeRestOfWorld = false,
+        public readonly TaxDisplay $taxDisplay = TaxDisplay::Auto
     ) {
     }
 
