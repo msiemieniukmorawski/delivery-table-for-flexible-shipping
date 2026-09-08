@@ -25,14 +25,15 @@ Shipping and the table follows on the next page load.
   threshold across the methods shown, so two carriers that change price at different amounts still
   produce one readable table.
 * **Headings in your customers' language.** Zone headings show the zone's regions as WooCommerce
-  names them — "Germany" in an English shop, "Deutschland" in a German one — not the zone name you
-  typed into wp-admin. Postcodes limit a zone rather than name it, so they are left out.
-* **One region, one answer.** Shops often split a country across several zones — a courier zone and
+  names them, so an English shop reads "Germany" where a German one reads "Deutschland". That is the
+  region, not the zone name you typed into wp-admin. Postcodes limit a zone rather than name it, so
+  they are left out.
+* **One region, one answer.** Shops often split a country across several zones: a courier zone, and
   a narrower zone for certain postcodes. "What does delivery to Germany cost?" is one question, so
   those zones are gathered under one heading, in the order you arranged them, however far apart they
   sit in wp-admin. Each region also gets an anchor such as `#dtfs-region-de`, so you can link
   straight to it from anywhere on your site.
-* **Every method in the zone, not just Flexible Shipping ones.** A plain WooCommerce flat rate,
+* **Every method in the zone, Flexible Shipping or not.** A plain WooCommerce flat rate,
   local pickup or free shipping method is priced too, and so are Flexible Shipping's own rules when
   they are switched on for such a method. A flat rate written as a formula like `10 + (2 * [qty])`
   depends on the basket rather than the order value, so it stays honest and shows a dash.
@@ -78,7 +79,7 @@ zones and cost rules.
 
 = A cell shows a dash instead of a price. Why? =
 
-No cost rule in that shipping method covers that order value range — usually because the method is
+No cost rule in that shipping method covers that order value range, usually because the method is
 priced by weight rather than by order value. The dash says so honestly instead of guessing.
 
 = Can I show only one zone? =
@@ -93,7 +94,7 @@ matches the rest of your shop. Force it either way with `[dtfs_shipping_table ta
 
 = I have two zones covering the same country. Will the table show them twice? =
 
-They are shown once, under one heading, one table after the other — which is what a customer asking
+They are shown once, under one heading, one table after the other. That is what a customer asking
 "how much is delivery to Germany?" needs. A zone that covers several countries at once keeps its own
 combined heading instead of being split up.
 

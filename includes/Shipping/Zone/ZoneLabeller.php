@@ -15,7 +15,7 @@ if (!defined('ABSPATH')) {
  *
  * Zone *names* are whatever the shop manager typed in wp-admin and are never
  * translated. Zone *regions* come from WooCommerce's own country/state lists,
- * so they follow the storefront language — "Germany" in an English shop,
+ * so they follow the storefront language: "Germany" in an English shop,
  * "Deutschland" in a German one. Postcodes are location limits rather than
  * regions and are deliberately left out.
  */

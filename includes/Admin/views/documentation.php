@@ -3,7 +3,7 @@
 /**
  * The plugin's only admin screen.
  *
- * Required directly by {@see \MSM\DeliveryTable\Admin\DocumentationPage} — this
+ * Required directly by {@see \MSM\DeliveryTable\Admin\DocumentationPage}. This
  * is wp-admin markup and is deliberately not theme-overridable.
  */
 
@@ -47,7 +47,7 @@ $dtfs_attributes_table = static function (array $attributes): void {
 	<p class="dtfs-doc-intro">
 		<?php
 		esc_html_e(
-			'This plugin reads your Flexible Shipping zones and cost rules and turns them into a delivery price table. There is nothing to configure here — change a rule in Flexible Shipping and the table follows.',
+			'This plugin reads your Flexible Shipping zones and cost rules and turns them into a delivery price table. There is nothing to configure here: change a rule in Flexible Shipping and the table follows.',
 			'delivery-table-for-flexible-shipping'
 		);
 		?>
@@ -113,7 +113,7 @@ $dtfs_attributes_table = static function (array $attributes): void {
 				<td>
 					<?php
 					esc_html_e(
-						'Headings show the zone regions translated into the storefront language — "Germany" in an English shop, "Deutschland" in a German one — rather than the zone name you typed in wp-admin. Postcodes limit a zone rather than name it, so they are left out.',
+						'Headings show the zone regions translated into the storefront language, so an English shop reads "Germany" where a German one reads "Deutschland". That is the region, not the zone name you typed in wp-admin. Postcodes limit a zone rather than name it, so they are left out.',
 						'delivery-table-for-flexible-shipping'
 					);
 					?>
@@ -124,7 +124,7 @@ $dtfs_attributes_table = static function (array $attributes): void {
 				<td>
 					<?php
 					esc_html_e(
-						'Several zones covering the same place are shown together under one heading, in the order you arranged them, however far apart they sit in wp-admin. A zone covering several countries at once keeps its own combined heading. Each region carries an anchor built from its country codes — #dtfs-region-de, or #dtfs-region-de-fr — so you can link straight to one table.',
+						'Several zones covering the same place are shown together under one heading, in the order you arranged them, however far apart they sit in wp-admin. A zone covering several countries at once keeps its own combined heading. Each region carries an anchor built from its country codes, such as #dtfs-region-de or #dtfs-region-de-fr, so you can link straight to one table.',
 						'delivery-table-for-flexible-shipping'
 					);
 					?>
@@ -146,7 +146,7 @@ $dtfs_attributes_table = static function (array $attributes): void {
 				<td>
 					<?php
 					esc_html_e(
-						'No cost rule in that method covers that order value — for example when the method is priced by weight rather than by order value. The table says so instead of guessing.',
+						'No cost rule in that method covers that order value, for example when the method is priced by weight rather than by order value. The table says so instead of guessing.',
 						'delivery-table-for-flexible-shipping'
 					);
 					?>

@@ -89,7 +89,7 @@ final class MethodRepository
      * Splits methods into "cash on delivery" and "prepaid" buckets.
      *
      * Flexible Shipping has no flag for this, so the split relies on a naming
-     * convention configured by the shop — an empty needle disables it.
+     * convention configured by the shop; an empty needle disables it.
      *
      * @param  list<WC_Shipping_Method> $methods
      * @return array{prepaid: list<WC_Shipping_Method>, cod: list<WC_Shipping_Method>}
