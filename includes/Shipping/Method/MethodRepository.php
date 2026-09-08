@@ -21,8 +21,13 @@ final class MethodRepository
      */
     public function inZone(WC_Shipping_Zone $zone, bool $includeDisabled = false): array
     {
+        /*
+         * The first argument is WooCommerce's `$enabled_only`. Passing true
+         * would drop disabled methods in the data store, leaving the
+         * `$includeDisabled` branch below with nothing left to include.
+         */
         $methods = array_filter(
-            $zone->get_shipping_methods(true),
+            $zone->get_shipping_methods(false),
             static fn (mixed $method): bool => $method instanceof WC_Shipping_Method
         );
 
