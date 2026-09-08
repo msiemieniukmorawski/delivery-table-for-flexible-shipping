@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
 /**
  * The plugin's only admin screen: how to use the shortcode and the block.
  *
- * There is nothing to configure — every option lives in Flexible Shipping —
+ * There is nothing to configure, because every option lives in Flexible Shipping,
  * so this registers no settings and saves nothing.
  */
 final class DocumentationPage implements Registrable
