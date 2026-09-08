@@ -78,7 +78,7 @@ export default function Edit( { name, attributes, setAttributes } ) {
 							{
 								value: 'auto',
 								label: __(
-									'Follow the WooCommerce setting',
+									'Follow the shop setting',
 									'delivery-table-for-flexible-shipping'
 								),
 							},
@@ -97,6 +97,10 @@ export default function Edit( { name, attributes, setAttributes } ) {
 								),
 							},
 						] }
+						help={ __(
+							'The shop setting is "Display prices during cart and checkout" in WooCommerce.',
+							'delivery-table-for-flexible-shipping'
+						) }
 						onChange={ ( value ) =>
 							setAttributes( { taxDisplay: value } )
 						}
