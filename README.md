@@ -11,6 +11,24 @@ table follows.
 
 ---
 
+## Screenshots
+
+Two regions on one page. Order value ranges are the columns, shipping methods the rows; free
+shipping is called free, and an asterisk marks a price that depends on more than the order value.
+
+[![The delivery table on a storefront page](.wordpress-org/screenshot-1.png)](.wordpress-org/screenshot-1.png)
+
+| The block | Placing the table |
+| --- | --- |
+| [![The Delivery Table block inspector](.wordpress-org/screenshot-2.png)](.wordpress-org/screenshot-2.png) | [![Shortcode attributes in wp-admin](.wordpress-org/screenshot-3.png)](.wordpress-org/screenshot-3.png) |
+| Zone, headings, tax and the cash-on-delivery split, in the block inspector. | Every shortcode attribute, documented under **WooCommerce → Delivery Table**. |
+
+Reading the table, and the developer surface:
+
+[![Reading the table, and the PHP API](.wordpress-org/screenshot-4.png)](.wordpress-org/screenshot-4.png)
+
+---
+
 ## Installation
 
 1. Install and activate WooCommerce and Flexible Shipping.
@@ -58,6 +76,18 @@ the shop's currency precision, so a zero-decimal currency such as HUF reads corr
 **Zone headings** show the zone's *regions* translated into the storefront language — "Germany" in an
 English shop, "Deutschland" in a German one — rather than the zone name typed into wp-admin.
 Postcodes limit a zone rather than name it, so they are left out.
+
+**Zones are grouped by region.** Shops often split one country across several zones — a courier zone
+and a narrower one for certain postcodes. "What does delivery to Germany cost?" is one question, so
+those zones are gathered under one heading, in the order you arranged them, however far apart they
+sit in wp-admin. A zone covering several countries at once keeps its own combined heading. Every
+region carries an anchor built from its country codes, so `/delivery/#dtfs-region-de` links straight
+to one table.
+
+**WooCommerce's own methods are priced too.** Flat rate, local pickup and free shipping are read from
+their own settings, and Flexible Shipping's rules take over whenever they are switched on for one of
+those methods. A flat rate written as a formula such as `10 + (2 * [qty])` depends on the basket
+rather than the order value, so it shows a dash rather than a number that would be wrong.
 
 **A dash** means no cost rule in that method covers that order value, typically because the method is
 priced by weight or item count. The table says so rather than guessing, and in particular never

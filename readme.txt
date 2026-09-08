@@ -119,8 +119,9 @@ Copy a file from the plugin's `templates/` folder into
 
 1. Two regions on one storefront page: order value ranges as columns, shipping methods as rows, free
    shipping where it applies and an asterisk where the price depends on more than the order value.
-2. The Delivery Table block and its inspector controls.
-3. The documentation screen under WooCommerce → Delivery Table.
+2. The Delivery Table block: zone, headings, tax and the cash-on-delivery split in the inspector.
+3. WooCommerce → Delivery Table: every shortcode attribute with an example.
+4. WooCommerce → Delivery Table: how to read the table, and the PHP API for developers.
 
 == Changelog ==
 
