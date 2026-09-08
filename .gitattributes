@@ -1,0 +1,21 @@
+# Normalise line endings in the repository.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.mo  binary
+
+# Development-only files, kept out of `git archive` exports.
+/.claude          export-ignore
+/.editorconfig    export-ignore
+/.distignore      export-ignore
+/.gitattributes   export-ignore
+/.github          export-ignore
+/.gitignore       export-ignore
+/CLAUDE.md        export-ignore
+/composer.json    export-ignore
+/composer.lock    export-ignore
+/package.json     export-ignore
+/package-lock.json export-ignore
+/phpcs.xml.dist   export-ignore
+/src              export-ignore

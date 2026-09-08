@@ -1,0 +1,17 @@
+# Excluded from the distributable ZIP (wp dist-archive / plugin-zip).
+.claude
+.distignore
+.editorconfig
+.gitattributes
+.github
+.gitignore
+CLAUDE.md
+composer.json
+composer.lock
+node_modules
+package.json
+package-lock.json
+phpcs.xml.dist
+src
+vendor
+*.zip

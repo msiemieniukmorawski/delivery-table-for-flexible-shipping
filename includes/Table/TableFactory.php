@@ -1,0 +1,105 @@
+<?php
+
+declare(strict_types=1);
+
+namespace MSM\DeliveryTable\Table;
+
+use MSM\DeliveryTable\Shipping\FreeShipping\ThresholdDetector;
+use MSM\DeliveryTable\Shipping\Price\PriceFormatter;
+use MSM\DeliveryTable\Shipping\Rule\RuleParser;
+use MSM\DeliveryTable\Shipping\Rule\RuleSet;
+use MSM\DeliveryTable\Shipping\Tax\ShippingTaxCalculator;
+use WC_Shipping_Method;
+
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+/**
+ * Builds a {@see DeliveryTable} out of shipping methods.
+ *
+ * Column boundaries are the union of every price change and every free
+ * shipping threshold across the methods in the table, which is what keeps
+ * rows aligned when two carriers switch price at different amounts.
+ */
+final class TableFactory
+{
+    public function __construct(
+        private readonly RuleParser $rules,
+        private readonly ThresholdDetector $thresholds,
+        private readonly IntervalBuilder $intervals,
+        private readonly ShippingTaxCalculator $tax,
+        private readonly PriceFormatter $prices
+    ) {
+    }
+
+    /**
+     * @param list<WC_Shipping_Method> $methods
+     */
+    public function create(string $heading, array $methods): ?DeliveryTable
+    {
+        if ($methods === []) {
+            return null;
+        }
+
+        /** @var list<array{method: WC_Shipping_Method, rules: RuleSet, threshold: float|null}> $parsed */
+        $parsed      = [];
+        $breakpoints = [];
+
+        foreach ($methods as $method) {
+            $ruleSet   = $this->rules->parse($method);
+            $threshold = $this->thresholds->detect($method);
+
+            $parsed[] = ['method' => $method, 'rules' => $ruleSet, 'threshold' => $threshold];
+
+            array_push($breakpoints, ...$ruleSet->breakpoints());
+
+            if ($threshold !== null && $threshold > 0.0) {
+                $breakpoints[] = $threshold;
+            }
+        }
+
+        $columns = $this->intervals->build($breakpoints);
+
+        $rows = array_map(
+            fn (array $entry): TableRow => new TableRow(
+                (string) $entry['method']->get_title(),
+                array_map(
+                    fn (ValueInterval $column): TableCell => $this->cell(
+                        $entry['rules'],
+                        $entry['threshold'],
+                        $column
+                    ),
+                    $columns
+                )
+            ),
+            $parsed
+        );
+
+        return new DeliveryTable($heading, $columns, $rows);
+    }
+
+    private function cell(RuleSet $rules, ?float $threshold, ValueInterval $column): TableCell
+    {
+        $freeLabel = __('Free shipping', 'delivery-table-for-flexible-shipping');
+
+        // The dedicated free shipping setting wins over whatever the rules say.
+        if ($threshold !== null && $column->startsAtOrAbove($threshold)) {
+            return TableCell::free($freeLabel);
+        }
+
+        $netCost = $rules->costFor($column->probeValue());
+
+        if ($netCost === null) {
+            return TableCell::unavailable(
+                __('Not available for this order value', 'delivery-table-for-flexible-shipping')
+            );
+        }
+
+        $cost = $this->prices->round($this->tax->grossCost($netCost));
+
+        return $cost <= 0.0
+            ? TableCell::free($freeLabel)
+            : TableCell::price($this->prices->html($cost));
+    }
+}

@@ -1,0 +1,18 @@
+{
+	"name": "delivery-table-for-flexible-shipping",
+	"version": "1.0.0",
+	"description": "Delivery price table generated from Flexible Shipping zones and rules.",
+	"author": "Marcin Siemieniuk-Morawski",
+	"homepage": "https://github.com/msiemieniukmorawski/delivery-table-for-flexible-shipping",
+	"license": "GPL-2.0-or-later",
+	"private": true,
+	"scripts": {
+		"build": "wp-scripts build",
+		"start": "wp-scripts start",
+		"lint:js": "wp-scripts lint-js src",
+		"format": "wp-scripts format src"
+	},
+	"devDependencies": {
+		"@wordpress/scripts": "^30.0.0"
+	}
+}

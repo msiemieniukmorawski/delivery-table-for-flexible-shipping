@@ -1,0 +1,151 @@
+/**
+ * Delivery Table for Flexible Shipping
+ *
+ * Every colour and radius is a custom property, so a theme can restyle the
+ * table without a single `!important`.
+ */
+
+.dtfs-zones {
+	--dtfs-border-color: #e6e6e6;
+	--dtfs-heading-color: inherit;
+	--dtfs-text-color: inherit;
+	--dtfs-accent-color: #009a7e;
+	--dtfs-muted-color: #6b7280;
+	--dtfs-radius: 10px;
+}
+
+/* ---------------------------------------------------------------- Zones */
+
+.dtfs-zone + .dtfs-zone {
+	margin-top: 32px;
+}
+
+.dtfs-zone__title {
+	margin: 0 0 8px;
+	font-size: 1.5rem;
+	color: var(--dtfs-heading-color, inherit);
+}
+
+/* ---------------------------------------------------------------- Table */
+
+.dtfs-table-wrap {
+	margin: 24px 0;
+}
+
+.dtfs-table__title {
+	margin: 0 0 10px;
+	font-size: 1.25rem;
+	color: var(--dtfs-heading-color, inherit);
+}
+
+/* Wide tables scroll inside their own box instead of the page. */
+.dtfs-table-scroll {
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+}
+
+.dtfs-table {
+	width: 100%;
+	border-collapse: collapse;
+	color: var(--dtfs-text-color, inherit);
+}
+
+.dtfs-table th,
+.dtfs-table td {
+	padding: 10px 12px;
+	border-bottom: 1px solid var(--dtfs-border-color, #e6e6e6);
+	text-align: left;
+	vertical-align: middle;
+}
+
+.dtfs-table thead th {
+	font-weight: 700;
+	white-space: nowrap;
+}
+
+.dtfs-table__method {
+	font-weight: 600;
+}
+
+.dtfs-cost--free {
+	color: var(--dtfs-accent-color, #009a7e);
+	font-weight: 600;
+}
+
+.dtfs-cost--unavailable {
+	color: var(--dtfs-muted-color, #6b7280);
+	cursor: help;
+}
+
+/* Stacked layout on narrow screens: each cell labelled by its column. */
+@media (max-width: 600px) {
+	.dtfs-table,
+	.dtfs-table thead,
+	.dtfs-table tbody,
+	.dtfs-table tr,
+	.dtfs-table th,
+	.dtfs-table td {
+		display: block;
+	}
+
+	.dtfs-table thead {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		overflow: hidden;
+		clip: rect(0 0 0 0);
+		clip-path: inset(50%);
+		white-space: nowrap;
+	}
+
+	.dtfs-table tr {
+		margin-bottom: 16px;
+		border: 1px solid var(--dtfs-border-color, #e6e6e6);
+		border-radius: var(--dtfs-radius, 10px);
+		overflow: hidden;
+	}
+
+	.dtfs-table td {
+		display: flex;
+		justify-content: space-between;
+		gap: 12px;
+	}
+
+	.dtfs-table td::before {
+		content: attr(data-label);
+		font-weight: 600;
+		color: var(--dtfs-muted-color, #6b7280);
+	}
+
+	.dtfs-table tr > :last-child {
+		border-bottom: 0;
+	}
+}
+
+/* ------------------------------------------------------------ Messages */
+
+.dtfs-message {
+	margin: 16px 0;
+	color: var(--dtfs-muted-color, #6b7280);
+}
+
+/* --------------------------------------------------------------- Admin */
+
+.dtfs-admin .dtfs-doc-table {
+	max-width: 900px;
+	margin: 12px 0 24px;
+}
+
+.dtfs-admin .dtfs-doc-code {
+	max-width: 900px;
+	padding: 12px;
+	border: 1px solid #dcdcde;
+	background: #fff;
+	overflow-x: auto;
+	white-space: pre;
+}
+
+.dtfs-admin .dtfs-doc-intro {
+	max-width: 900px;
+	font-size: 14px;
+}

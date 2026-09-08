@@ -1,0 +1,31 @@
+{
+	"name": "msiemieniukmorawski/delivery-table-for-flexible-shipping",
+	"description": "Delivery price table generated from Flexible Shipping zones and rules.",
+	"type": "wordpress-plugin",
+	"license": "GPL-2.0-or-later",
+	"homepage": "https://github.com/msiemieniukmorawski/delivery-table-for-flexible-shipping",
+	"authors": [
+		{
+			"name": "Marcin Siemieniuk-Morawski",
+			"homepage": "https://ms-m.pl/"
+		}
+	],
+	"require": {
+		"php": ">=8.1"
+	},
+	"require-dev": {
+		"wp-coding-standards/wpcs": "^3.1",
+		"phpcompatibility/phpcompatibility-wp": "^2.1",
+		"dealerdirect/phpcodesniffer-composer-installer": "^1.0"
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	},
+	"scripts": {
+		"lint": "phpcs",
+		"lint:fix": "phpcbf"
+	},
+	"_comment": "Composer is a development dependency only. The plugin loads its own PSR-4 autoloader at runtime, so vendor/ must never be shipped - see .distignore."
+}

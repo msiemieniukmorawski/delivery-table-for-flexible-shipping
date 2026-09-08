@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<ruleset name="Delivery Table for Flexible Shipping">
+	<description>Coding standards for the plugin.</description>
+
+	<file>.</file>
+
+	<exclude-pattern>/build/*</exclude-pattern>
+	<exclude-pattern>/node_modules/*</exclude-pattern>
+	<exclude-pattern>/vendor/*</exclude-pattern>
+
+	<arg name="extensions" value="php"/>
+	<arg name="basepath" value="."/>
+	<arg name="colors"/>
+	<arg name="parallel" value="8"/>
+	<arg value="sp"/>
+
+	<rule ref="WordPress-Extra">
+		<!--
+			The plugin follows PSR-12 file and naming conventions rather than the
+			WordPress ones: PSR-4 class files, camelCase methods, short array syntax
+			and four-space indentation. Those sniffs are turned off deliberately;
+			everything about security, escaping, i18n and prefixing stays on.
+		-->
+		<exclude name="WordPress.Files.FileName"/>
+		<exclude name="WordPress.NamingConventions.ValidVariableName"/>
+		<exclude name="WordPress.NamingConventions.ValidFunctionName"/>
+		<exclude name="WordPress.Arrays.ArrayDeclarationSpacing"/>
+		<exclude name="WordPress.Arrays.ArrayIndentation"/>
+		<exclude name="Generic.WhiteSpace.DisallowSpaceIndent"/>
+		<exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
+		<exclude name="Universal.Arrays.DisallowShortArraySyntax"/>
+		<exclude name="PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket"/>
+		<exclude name="PEAR.Functions.FunctionCallSignature.CloseBracketLine"/>
+		<exclude name="Squiz.Commenting.FileComment"/>
+	</rule>
+
+	<rule ref="Generic.WhiteSpace.ScopeIndent">
+		<properties>
+			<property name="indent" value="4"/>
+			<property name="tabIndent" value="false"/>
+		</properties>
+	</rule>
+
+	<!-- Every global symbol must carry the plugin prefix. -->
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="dtfs"/>
+				<element value="MSM\DeliveryTable"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- The text domain must match the plugin slug. -->
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="delivery-table-for-flexible-shipping"/>
+			</property>
+		</properties>
+	</rule>
+
+	<!-- Minimum supported versions. -->
+	<config name="minimum_wp_version" value="6.2"/>
+	<config name="testVersion" value="8.1-"/>
+	<rule ref="PHPCompatibilityWP"/>
+</ruleset>
