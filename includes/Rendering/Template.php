@@ -79,7 +79,9 @@ final class Template
 
         foreach ($candidates as $candidate) {
             if (is_readable($candidate)) {
-                return $this->resolved[$template] = $candidate;
+                $this->resolved[$template] = $candidate;
+
+                return $candidate;
             }
         }
 

@@ -29,9 +29,65 @@
 		<exclude name="Generic.WhiteSpace.DisallowSpaceIndent"/>
 		<exclude name="Generic.Arrays.DisallowShortArraySyntax"/>
 		<exclude name="Universal.Arrays.DisallowShortArraySyntax"/>
-		<exclude name="PEAR.Functions.FunctionCallSignature.ContentAfterOpenBracket"/>
-		<exclude name="PEAR.Functions.FunctionCallSignature.CloseBracketLine"/>
 		<exclude name="Squiz.Commenting.FileComment"/>
+
+		<!--
+			Spacing inside brackets and parentheses. WordPress writes `foo( $bar )`
+			and `if ( $x )`; PSR-12 writes `foo($bar)` and `if ($x)`. Same
+			disagreement, one decision, so the whole family goes rather than the
+			handful of error codes that used to be listed here.
+		-->
+		<exclude name="PEAR.Functions.FunctionCallSignature"/>
+		<exclude name="Squiz.Functions.FunctionDeclarationArgumentSpacing"/>
+		<exclude name="Squiz.Functions.MultiLineFunctionDeclaration"/>
+		<exclude name="WordPress.WhiteSpace.ControlStructureSpacing"/>
+		<exclude name="WordPress.WhiteSpace.CastStructureSpacing"/>
+		<exclude name="WordPress.WhiteSpace.OperatorSpacing"/>
+		<exclude name="Generic.WhiteSpace.ArbitraryParenthesesSpacing"/>
+		<exclude name="WordPress.Arrays.ArrayKeySpacingRestrictions"/>
+		<exclude name="NormalizedArrays.Arrays.ArrayBraceSpacing"/>
+		<exclude name="NormalizedArrays.Arrays.CommaAfterLast"/>
+
+		<!-- PSR-12 opens a class or function brace on the next line. -->
+		<exclude name="Generic.Classes.OpeningBraceSameLine"/>
+		<exclude name="Generic.Functions.OpeningFunctionBraceKernighanRitchie"/>
+
+		<!-- Aligning `=` and `=>` into columns; the code reads fine without it. -->
+		<exclude name="WordPress.Arrays.MultipleStatementAlignment"/>
+		<exclude name="Generic.Formatting.MultipleStatementAlignment"/>
+
+		<!--
+			Yoda conditions guard against `=` typed for `==`. Every comparison here
+			is strict and every file declares strict types, so the guard buys
+			nothing and costs readability.
+		-->
+		<exclude name="WordPress.PHP.YodaConditions"/>
+
+		<!-- `?:` is deliberate: PHP 8.1 is the floor, and the elvis reads well. -->
+		<exclude name="Universal.Operators.DisallowShortTernary"/>
+
+		<!--
+			`$echo` and `$class` as parameter names. WordPress core itself uses
+			`$echo` throughout, and `$class` is what a PSR-4 autoloader receives.
+		-->
+		<exclude name="Universal.NamingConventions.NoReservedKeywordParameterNames"/>
+	</rule>
+
+	<!--
+		Storefront views are required from inside Template::render(), so the
+		variables they use live in a method scope, not the global one. The sniff
+		cannot see that, but it must keep working everywhere else.
+	-->
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound">
+		<exclude-pattern>/templates/*</exclude-pattern>
+	</rule>
+
+	<!--
+		`$this` inside an enum method is valid PHP 8.1; the sniff does not model
+		enums and reads TaxDisplay::apply() as a plain function.
+	-->
+	<rule ref="PHPCompatibility.Variables.ForbiddenThisUseContexts">
+		<exclude-pattern>/includes/Shipping/Tax/TaxDisplay.php</exclude-pattern>
 	</rule>
 
 	<rule ref="Generic.WhiteSpace.ScopeIndent">
