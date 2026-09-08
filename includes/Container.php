@@ -12,6 +12,7 @@ use MSM\DeliveryTable\Rendering\Template;
 use MSM\DeliveryTable\Shipping\FreeShipping\ThresholdDetector;
 use MSM\DeliveryTable\Shipping\Method\MethodRepository;
 use MSM\DeliveryTable\Shipping\Price\PriceFormatter;
+use MSM\DeliveryTable\Shipping\Rule\CoreMethodRules;
 use MSM\DeliveryTable\Shipping\Rule\RuleParser;
 use MSM\DeliveryTable\Shipping\Tax\ShippingTaxCalculator;
 use MSM\DeliveryTable\Shipping\Zone\ZoneLabeller;
@@ -110,9 +111,20 @@ final class Container
         return $this->share(MethodRepository::class, static fn (): MethodRepository => new MethodRepository());
     }
 
+    public function coreMethodRules(): CoreMethodRules
+    {
+        return $this->share(
+            CoreMethodRules::class,
+            fn (): CoreMethodRules => new CoreMethodRules($this->methods())
+        );
+    }
+
     public function ruleParser(): RuleParser
     {
-        return $this->share(RuleParser::class, fn (): RuleParser => new RuleParser($this->methods()));
+        return $this->share(
+            RuleParser::class,
+            fn (): RuleParser => new RuleParser($this->methods(), $this->coreMethodRules())
+        );
     }
 
     public function thresholdDetector(): ThresholdDetector
