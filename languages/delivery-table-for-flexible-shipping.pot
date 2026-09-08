@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-09-08T18:19:53+00:00\n"
+"POT-Creation-Date: 2026-09-08T18:22:14+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: delivery-table-for-flexible-shipping\n"
@@ -123,53 +123,69 @@ msgid "Headings show the zone regions translated into the storefront language �
 msgstr ""
 
 #: includes/Admin/views/documentation.php:123
-msgid "A dash instead of a price"
+msgid "Zones grouped by region"
 msgstr ""
 
 #: includes/Admin/views/documentation.php:126
-msgid "No cost rule in that method covers that order value — for example when the method is priced by weight rather than by order value. The table says so instead of guessing."
+msgid "Several zones covering the same place are shown together under one heading, in the order you arranged them, however far apart they sit in wp-admin. A zone covering several countries at once keeps its own combined heading. Each region carries an anchor built from its country codes — #dtfs-region-de, or #dtfs-region-de-fr — so you can link straight to one table."
 msgstr ""
 
 #: includes/Admin/views/documentation.php:134
-msgid "An asterisk after a price"
+msgid "Methods WooCommerce provides itself"
 msgstr ""
 
 #: includes/Admin/views/documentation.php:137
-msgid "The amount is right for that order value, but the same Flexible Shipping rule also depends on something the table cannot show - weight, item count, or a free shipping coupon. Hover the asterisk for the detail."
+msgid "Flat rate, local pickup and free shipping are priced from their own settings, and Flexible Shipping's rules take over whenever they are switched on for one of those methods. A flat rate whose cost is a formula rather than a fixed amount depends on the basket, not the order value, so it shows a dash."
 msgstr ""
 
 #: includes/Admin/views/documentation.php:145
+msgid "A dash instead of a price"
+msgstr ""
+
+#: includes/Admin/views/documentation.php:148
+msgid "No cost rule in that method covers that order value — for example when the method is priced by weight rather than by order value. The table says so instead of guessing."
+msgstr ""
+
+#: includes/Admin/views/documentation.php:156
+msgid "An asterisk after a price"
+msgstr ""
+
+#: includes/Admin/views/documentation.php:159
+msgid "The amount is right for that order value, but the same Flexible Shipping rule also depends on something the table cannot show - weight, item count, or a free shipping coupon. Hover the asterisk for the detail."
+msgstr ""
+
+#: includes/Admin/views/documentation.php:167
 #: src/shipping-table/edit.js:75
 msgid "Tax"
 msgstr ""
 
-#: includes/Admin/views/documentation.php:148
+#: includes/Admin/views/documentation.php:170
 msgid "By default the table follows the WooCommerce setting \"Display prices during cart and checkout\", so a gross-priced shop gets gross prices and a net-priced shop gets net ones. Override it per table with the tax attribute."
 msgstr ""
 
-#: includes/Admin/views/documentation.php:158
+#: includes/Admin/views/documentation.php:180
 msgid "For developers"
 msgstr ""
 
-#: includes/Admin/views/documentation.php:160
+#: includes/Admin/views/documentation.php:182
 msgid "Template function"
 msgstr ""
 
-#: includes/Admin/views/documentation.php:173
+#: includes/Admin/views/documentation.php:195
 msgid "Overriding the markup"
 msgstr ""
 
 #. translators: 1: plugin folder name, 2: theme folder name.
-#: includes/Admin/views/documentation.php:179
+#: includes/Admin/views/documentation.php:201
 #, php-format
 msgid "Copy a file from the plugin's %1$s folder into %2$s in your theme and edit it there. Child theme wins over parent theme, exactly like WooCommerce templates."
 msgstr ""
 
-#: includes/Admin/views/documentation.php:186
+#: includes/Admin/views/documentation.php:208
 msgid "Hooks"
 msgstr ""
 
-#: includes/Admin/views/documentation.php:192
+#: includes/Admin/views/documentation.php:214
 msgid "Action. Fires once every service is registered; receives the service container."
 msgstr ""
 

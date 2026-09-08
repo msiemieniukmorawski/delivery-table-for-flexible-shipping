@@ -120,6 +120,28 @@ $dtfs_attributes_table = static function (array $attributes): void {
 				</td>
 			</tr>
 			<tr>
+				<td><strong><?php esc_html_e('Zones grouped by region', 'delivery-table-for-flexible-shipping'); ?></strong></td>
+				<td>
+					<?php
+					esc_html_e(
+						'Several zones covering the same place are shown together under one heading, in the order you arranged them, however far apart they sit in wp-admin. A zone covering several countries at once keeps its own combined heading. Each region carries an anchor built from its country codes — #dtfs-region-de, or #dtfs-region-de-fr — so you can link straight to one table.',
+						'delivery-table-for-flexible-shipping'
+					);
+					?>
+				</td>
+			</tr>
+			<tr>
+				<td><strong><?php esc_html_e('Methods WooCommerce provides itself', 'delivery-table-for-flexible-shipping'); ?></strong></td>
+				<td>
+					<?php
+					esc_html_e(
+						'Flat rate, local pickup and free shipping are priced from their own settings, and Flexible Shipping\'s rules take over whenever they are switched on for one of those methods. A flat rate whose cost is a formula rather than a fixed amount depends on the basket, not the order value, so it shows a dash.',
+						'delivery-table-for-flexible-shipping'
+					);
+					?>
+				</td>
+			</tr>
+			<tr>
 				<td><strong><?php esc_html_e('A dash instead of a price', 'delivery-table-for-flexible-shipping'); ?></strong></td>
 				<td>
 					<?php
