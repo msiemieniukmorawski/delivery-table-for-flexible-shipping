@@ -44,7 +44,7 @@ final class TableFactory
             return null;
         }
 
-        /** @var list<array{method: WC_Shipping_Method, rules: RuleSet, threshold: FreeShippingThreshold|null}> $parsed */
+        /** @var list<array{method: WC_Shipping_Method, rules: RuleSet, threshold: FreeShippingThreshold|null, taxable: bool}> $parsed */
         $parsed      = [];
         $breakpoints = [];
 
@@ -52,7 +52,12 @@ final class TableFactory
             $ruleSet   = $this->rules->parse($method);
             $threshold = $this->thresholds->detect($method);
 
-            $parsed[] = ['method' => $method, 'rules' => $ruleSet, 'threshold' => $threshold];
+            $parsed[] = [
+                'method'    => $method,
+                'rules'     => $ruleSet,
+                'threshold' => $threshold,
+                'taxable'   => $this->tax->isTaxable($method),
+            ];
 
             array_push($breakpoints, ...$ruleSet->breakpoints());
 
@@ -75,7 +80,8 @@ final class TableFactory
                         $entry['rules'],
                         $entry['threshold'],
                         $column,
-                        $taxDisplay
+                        $taxDisplay,
+                        $entry['taxable']
                     ),
                     $columns
                 )
@@ -86,11 +92,17 @@ final class TableFactory
         return new DeliveryTable($heading, $columns, $rows);
     }
 
+    /**
+     * @param bool $taxable Whether this method's costs are taxed at all. A
+     *                      method set to "None" is priced exactly as entered,
+     *                      whatever the shop displays elsewhere.
+     */
     private function cell(
         RuleSet $rules,
         ?FreeShippingThreshold $threshold,
         ValueInterval $column,
-        TaxDisplay $taxDisplay
+        TaxDisplay $taxDisplay,
+        bool $taxable
     ): TableCell
     {
         $freeLabel = __('Free shipping', 'delivery-table-for-flexible-shipping');
@@ -117,7 +129,9 @@ final class TableFactory
             );
         }
 
-        $cost = $this->prices->round($taxDisplay->apply($rule->cost, $this->tax));
+        $cost = $this->prices->round(
+            $taxable ? $taxDisplay->apply($rule->cost, $this->tax) : $rule->cost
+        );
 
         $cell = $cost <= 0.0
             ? TableCell::free($freeLabel)
