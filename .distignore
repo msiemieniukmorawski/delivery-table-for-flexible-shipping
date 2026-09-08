@@ -1,5 +1,6 @@
 # Excluded from the distributable ZIP (wp dist-archive / plugin-zip).
 .claude
+.wordpress-org
 .distignore
 .editorconfig
 .gitattributes
