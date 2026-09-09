@@ -1,6 +1,6 @@
 {
 	"name": "delivery-table-for-flexible-shipping",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Delivery price table generated from Flexible Shipping zones and rules.",
 	"author": "Marcin Siemieniuk-Morawski",
 	"homepage": "https://github.com/msiemieniukmorawski/delivery-table-for-flexible-shipping",

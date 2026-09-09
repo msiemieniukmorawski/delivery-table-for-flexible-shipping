@@ -4,7 +4,7 @@ Tags: woocommerce, shipping, delivery, flexible shipping, shipping table
 Requires at least: 6.2
 Tested up to: 7.1
 Requires PHP: 8.1
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -126,10 +126,16 @@ Copy a file from the plugin's `templates/` folder into
 
 == Changelog ==
 
+= 1.0.1 =
+* No changes to the plugin itself. Release ZIPs are now built automatically.
+
 = 1.0.0 =
 * First release.
 
 == Upgrade Notice ==
+
+= 1.0.1 =
+No changes to the plugin itself.
 
 = 1.0.0 =
 First release.

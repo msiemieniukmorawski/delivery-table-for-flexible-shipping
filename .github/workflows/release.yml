@@ -1,0 +1,73 @@
+name: Release
+
+# Runs when you push a tag like v1.0.0 (or v1.0.1, v2.0.0...).
+# Builds a clean plugin ZIP and attaches it to the GitHub Release
+# as delivery-table-for-flexible-shipping.zip - a stable filename,
+# so releases/latest/download/delivery-table-for-flexible-shipping.zip
+# always points at the newest version.
+#
+# It can also be started by hand from the Actions tab. That builds the same
+# ZIP and leaves it as a workflow artifact, without checking a version or
+# publishing anything - which is how you test the build without spending a tag.
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build ZIP and publish release
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Build block
+        run: |
+          npm ci
+          npm run build
+
+      - name: Check that the tag matches the plugin version
+        if: startsWith(github.ref, 'refs/tags/')
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          HEADER=$(grep -Po '^\s*\*\s*Version:\s*\K[0-9.]+' delivery-table-for-flexible-shipping.php)
+          STABLE=$(grep -Po '^Stable tag:\s*\K[0-9.]+' readme.txt)
+          echo "tag=$TAG header=$HEADER stable=$STABLE"
+          if [ "$TAG" != "$HEADER" ] || [ "$TAG" != "$STABLE" ]; then
+            echo "::error::Tag v$TAG does not match plugin header ($HEADER) or readme Stable tag ($STABLE)."
+            exit 1
+          fi
+
+      - name: Build plugin ZIP (folder name = slug, dev files excluded via .distignore)
+        run: |
+          SLUG=delivery-table-for-flexible-shipping
+          rm -rf /tmp/dist && mkdir -p "/tmp/dist/$SLUG"
+          rsync -a --exclude-from=.distignore --exclude='.git' ./ "/tmp/dist/$SLUG/"
+          (cd /tmp/dist && zip -rq "$GITHUB_WORKSPACE/$SLUG.zip" "$SLUG")
+          unzip -l "$SLUG.zip" | head -40
+
+      - name: Keep the ZIP as a workflow artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: delivery-table-for-flexible-shipping
+          path: delivery-table-for-flexible-shipping.zip
+          if-no-files-found: error
+
+      - name: Create GitHub Release and attach ZIP
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: delivery-table-for-flexible-shipping.zip
+          generate_release_notes: true
