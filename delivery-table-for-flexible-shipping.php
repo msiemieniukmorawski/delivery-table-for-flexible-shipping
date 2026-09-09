@@ -3,7 +3,7 @@
  * Plugin Name:       Delivery Table for Flexible Shipping
  * Plugin URI:        https://github.com/msiemieniukmorawski/delivery-table-for-flexible-shipping
  * Description:       Auto-generated delivery price table for WooCommerce, built from your Flexible Shipping zones and cost rules. No more hand-maintained shipping tables.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Requires at least: 6.2
  * Requires PHP:      8.1
  * Author:            Marcin Siemieniuk-Morawski
@@ -29,7 +29,7 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-const VERSION     = '1.0.0';
+const VERSION     = '1.0.1';
 const TEXT_DOMAIN = 'delivery-table-for-flexible-shipping';
 const MIN_PHP     = '8.1';
 
